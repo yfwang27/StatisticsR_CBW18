@@ -51,7 +51,8 @@ You may navigate to the unarchived Reproducible-R folder in the Rstudio menu
 
 or in the console.
 
-```{r,eval=F}
+
+```r
 setwd("/Users/yfwang27/workfromhome/workshop/StatisticsR_CBW18")
 # e.g. setwd("~/Downloads/StatisticsInR/Statistics2016")
 ```
@@ -75,8 +76,9 @@ We don't need a pretty excel file for the csv format
 Load data
 ========================================================
 
-```{r,prompt=T}
-alldata<-read.csv(file="data/mouse_BW_Fat_Glu_info.csv")
+
+```r
+> alldata<-read.csv(file="data/mouse_BW_Fat_Glu_info.csv")
 ```
 
 Data summary
@@ -117,43 +119,107 @@ Recap some basic R functions (2/6)
 ========================================================
 
 **head()**: See the first 6 lines of an R object
-```{r,prompt=T}
-head(alldata)
+
+```r
+> head(alldata)
+```
+
+```
+     mouseID Sex Genotype Age ID BW.gram FatTissue.percent GLU.mg.dL
+1 F_+/+_16_1   F      +/+  16  1   29.98              20.0       162
+2 F_+/+_16_2   F      +/+  16  2   20.03              20.4       170
+3 F_+/+_16_3   F      +/+  16  3   21.94              25.2       155
+4 F_+/+_16_4   F      +/+  16  4   21.60              20.0       181
+5  F_+/+_8_1   F      +/+   8  1   19.55              22.9       135
+6  F_+/+_8_2   F      +/+   8  2   17.38              22.0       146
 ```
 
 Recap some basic R functions (3/6)
 ========================================================
 see the how many rows and columns in "alldata" object
-```{r,prompt=T}
-dim(alldata)
+
+```r
+> dim(alldata)
+```
+
+```
+[1] 74  8
 ```
 
 see column names of "alldata"
-```{r,prompt=T}
-colnames(alldata)
+
+```r
+> colnames(alldata)
+```
+
+```
+[1] "mouseID"           "Sex"               "Genotype"         
+[4] "Age"               "ID"                "BW.gram"          
+[7] "FatTissue.percent" "GLU.mg.dL"        
 ```
 
 Recap some basic R functions (4/6)
 ========================================================
 
 **str()**: Compactly display the internal structure of an R object
-```{r,prompt=T}
-str(alldata)
+
+```r
+> str(alldata)
+```
+
+```
+'data.frame':	74 obs. of  8 variables:
+ $ mouseID          : Factor w/ 74 levels "F_+/+_16_1","F_+/+_16_2",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ Sex              : Factor w/ 2 levels "F","M": 1 1 1 1 1 1 1 1 1 1 ...
+ $ Genotype         : Factor w/ 3 levels "+/+","db/+","db/db": 1 1 1 1 1 1 1 1 1 2 ...
+ $ Age              : int  16 16 16 16 8 8 8 8 8 16 ...
+ $ ID               : int  1 2 3 4 1 2 3 4 5 1 ...
+ $ BW.gram          : num  30 20 21.9 21.6 19.6 ...
+ $ FatTissue.percent: num  20 20.4 25.2 20 22.9 22 26 25.2 21.5 33.4 ...
+ $ GLU.mg.dL        : int  162 170 155 181 135 146 152 153 144 159 ...
 ```
 
 Recap some basic R functions (5/6)
 ========================================================
 
-```{r,prompt=T}
-summary(alldata)
+
+```r
+> summary(alldata)
+```
+
+```
+       mouseID   Sex     Genotype       Age           ID       
+ F_+/+_16_1: 1   F:35   +/+  :19   Min.   : 8   Min.   : 1.00  
+ F_+/+_16_2: 1   M:39   db/+ :15   1st Qu.: 8   1st Qu.: 2.00  
+ F_+/+_16_3: 1          db/db:40   Median :12   Median : 4.00  
+ F_+/+_16_4: 1                     Mean   :12   Mean   : 4.23  
+ F_+/+_8_1 : 1                     3rd Qu.:16   3rd Qu.: 6.00  
+ F_+/+_8_2 : 1                     Max.   :16   Max.   :10.00  
+ (Other)   :68                                                 
+    BW.gram      FatTissue.percent   GLU.mg.dL    
+ Min.   :16.04   Min.   :20.00     Min.   :131.0  
+ 1st Qu.:26.87   1st Qu.:26.70     1st Qu.:195.8  
+ Median :38.15   Median :54.15     Median :509.0  
+ Mean   :37.36   Mean   :44.91     Mean   :448.1  
+ 3rd Qu.:47.80   3rd Qu.:60.70     3rd Qu.:664.2  
+ Max.   :61.97   Max.   :71.10     Max.   :876.0  
+                                                  
 ```
 
 Recap some basic R functions (6/6)
 ========================================================
 
 **ftable()**: Create ‘flat’ contingency tables
-```{r}
+
+```r
 ftable(alldata[,c("Sex","Genotype")])
+```
+
+```
+    Genotype +/+ db/+ db/db
+Sex                        
+F              9    6    20
+M             10    9    20
 ```
 
 
@@ -165,23 +231,49 @@ Spread of data - use body weight from WT mice (1/4)
 
 --[Plotting in R](http://mrccsc.github.io/Reproducible-R/r_course/presentations/slides/introToR_Session1.html#/plotting)
 
-```{r,prompt=T}
-WT_data<-alldata[alldata$Genotype=="+/+",]
-WT_data$BW.gram
+
+```r
+> WT_data<-alldata[alldata$Genotype=="+/+",]
+> WT_data$BW.gram
+```
+
+```
+ [1] 29.98 20.03 21.94 21.60 19.55 17.38 19.67 18.10 16.04 27.77 30.93
+[12] 29.28 26.57 29.65 22.49 23.45 24.84 23.20 23.26
 ```
 
 Spread of data - useful functions (2/4)
 ========================================================
 
 **min()**, **max()**, **median()**, **range()** and **quantile()** functions
-```{r,prompt=T}
-min.BW.gram<-min(WT_data$BW.gram)
-max.BW.gram<-max(WT_data$BW.gram)
-median.BW.gram<-median(WT_data$BW.gram)
-mean.BW.gram<-mean(WT_data$BW.gram)
-c(min.BW.gram, max.BW.gram, median.BW.gram, mean.BW.gram)
-range(WT_data$BW.gram)
-quantile(WT_data$BW.gram)
+
+```r
+> min.BW.gram<-min(WT_data$BW.gram)
+> max.BW.gram<-max(WT_data$BW.gram)
+> median.BW.gram<-median(WT_data$BW.gram)
+> mean.BW.gram<-mean(WT_data$BW.gram)
+> c(min.BW.gram, max.BW.gram, median.BW.gram, mean.BW.gram)
+```
+
+```
+[1] 16.04000 30.93000 23.20000 23.45947
+```
+
+```r
+> range(WT_data$BW.gram)
+```
+
+```
+[1] 16.04 30.93
+```
+
+```r
+> quantile(WT_data$BW.gram)
+```
+
+```
+   0%   25%   50%   75%  100% 
+16.04 19.85 23.20 27.17 30.93 
 ```
 
 Spread of data - work with plots (3/4)
@@ -190,30 +282,63 @@ Left: 40%
 
 Boxplot
 
-```{r, echo=FALSE,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-boxplot(WT_data$BW.gram,ylab="Body Weight (gram)")
-abline(h=mean(WT_data$BW.gram),col="forestgreen",lwd=3)
-```
+<img src="CBW2018_course-figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="720px" />
 ***
-```{r,prompt=T}
-c(min.BW.gram, max.BW.gram)
-c(median.BW.gram, mean.BW.gram)
-quantile(WT_data$BW.gram)[c(2,4)]
+
+```r
+> c(min.BW.gram, max.BW.gram)
+```
+
+```
+[1] 16.04 30.93
+```
+
+```r
+> c(median.BW.gram, mean.BW.gram)
+```
+
+```
+[1] 23.20000 23.45947
+```
+
+```r
+> quantile(WT_data$BW.gram)[c(2,4)]
+```
+
+```
+  25%   75% 
+19.85 27.17 
 ```
 
 Spread of data -  work with plots (4/4)
 ========================================================
 **summary()**
-```{r,prompt=T}
-summary(WT_data$BW.gram)
+
+```r
+> summary(WT_data$BW.gram)
+```
+
+```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  16.04   19.85   23.20   23.46   27.17   30.93 
 ```
 **range()**: show the minimum and maximum
-```{r,prompt=T}
-range(WT_data$BW.gram)
+
+```r
+> range(WT_data$BW.gram)
+```
+
+```
+[1] 16.04 30.93
 ```
 **IQR()**: show the interquartile range, i.e. 3rd quartile - 1st quartile
-```{r,prompt=T}
-IQR(WT_data$BW.gram)
+
+```r
+> IQR(WT_data$BW.gram)
+```
+
+```
+[1] 7.32
 ```
 
 Spread of data - more about boxplot (optional 1/3)
@@ -221,53 +346,29 @@ Spread of data - more about boxplot (optional 1/3)
 
 Scatter plot: plot the WT mice's Body Weight against index
 
-```{r,prompt=T,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-plot(WT_data$BW.gram,ylab="Body Weight (gram)")
+
+```r
+> plot(WT_data$BW.gram,ylab="Body Weight (gram)")
 ```
+
+<img src="CBW2018_course-figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="720px" />
 
 Spread of data - work with plots (optional 2/3)
 ========================================================
 sort the data from min to max
 
-```{r,prompt=T,echo=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-plot(sort(WT_data$BW.gram),ylab="Body Weight (gram)")
-```
+<img src="CBW2018_course-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="720px" />
 ***
 
 start to see something here...
 
-```{r,echo=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-quan_1<-quantile(c(1:nrow(WT_data)))[2]
-quan_3<-quantile(c(1:nrow(WT_data)))[4]
-plot(sort(WT_data$BW.gram),ylab="Body Weight (gram)",xaxt="n")
-  axis(side=1, at=c(0,quan_1,median(1:nrow(WT_data)),quan_3,nrow(WT_data)),
-     labels=c("min","1stquantile","median","3rdquantile","max"))
-  points(x=c(1,median(1:nrow(WT_data)),nrow(WT_data)),
-         y=c(min(WT_data$BW.gram),
-             median(WT_data$BW.gram),max(WT_data$BW.gram)),
-         col="red",pch=16,cex=1.6)
-  abline(h=quantile(WT_data$BW.gram)[c(2,4)],
-         v=quantile(c(1:nrow(WT_data)))[c(2,4)],col="pink",lwd=3,lty=2)
-```
+<img src="CBW2018_course-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="720px" />
 
 
 Spread of data - work with plots (optional 3/3)
 ========================================================
 
-```{r, echo=FALSE,fig.width=6,fig.height=6,dpi=300,out.width="750px",height="720px"}
-par(mfrow=c(1,2))
-  boxplot(WT_data$BW.gram,ylab="Body Weight (gram)")
-  plot(sort(WT_data$BW.gram),ylab="Body Weight (gram)",xaxt="n")
-  axis(side=1, at=c(0,quan_1,median(1:nrow(WT_data)),quan_3,nrow(WT_data)),
-     labels=c("min","1stquantile","median","3rdquantile","max"))
-  points(x=c(1,median(1:nrow(WT_data)),nrow(WT_data)),
-         y=c(min(WT_data$BW.gram),
-             median(WT_data$BW.gram),max(WT_data$BW.gram)),
-         col="red",pch=16,cex=1.6)
-  abline(h=quantile(WT_data$BW.gram)[c(2,4)],
-         v=quantile(c(1:nrow(WT_data)))[c(2,4)],col="pink",lwd=3,lty=2)
-par(mfrow=c(1,1))
-```
+<img src="CBW2018_course-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="750px" />
 
 
 Spread of data - Variance and Standard deviation (1/3)
@@ -283,17 +384,34 @@ $$
   \\ \\
   \end{aligned}
 $$
-```{r,prompt=T}
-var.BW.gram<-sum((WT_data$BW.gram-mean.BW.gram)^2)/(nrow(WT_data)-1)
-sd.BW.gram<-sqrt(var.BW.gram)
-c(var.BW.gram, sd.BW.gram)
+
+```r
+> var.BW.gram<-sum((WT_data$BW.gram-mean.BW.gram)^2)/(nrow(WT_data)-1)
+> sd.BW.gram<-sqrt(var.BW.gram)
+> c(var.BW.gram, sd.BW.gram)
+```
+
+```
+[1] 20.53558  4.53162
 ```
 
 Spread of data - var() and sd() function (2/3)
 ========================================================
-```{r,prompt=T}
-var(WT_data$BW.gram)
-sd(WT_data$BW.gram)
+
+```r
+> var(WT_data$BW.gram)
+```
+
+```
+[1] 20.53558
+```
+
+```r
+> sd(WT_data$BW.gram)
+```
+
+```
+[1] 4.53162
 ```
 
 More about SD and Variance (3/3)
@@ -305,80 +423,134 @@ More about SD and Variance (3/3)
 Data shape - histogram (1/4)
 ========================================================
 
-```{r,prompt=T,fig.width=4.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-hist(WT_data$BW.gram,breaks=10)
+
+```r
+> hist(WT_data$BW.gram,breaks=10)
 ```
+
+<img src="CBW2018_course-figure/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="720px" />
 
 Data shape - histogram (2/4)
 ========================================================
 
-```{r,prompt=T,fig.width=4.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-hist(WT_data$BW.gram,breaks=10,freq = F)
-lines(density(WT_data$BW.gram),col="red")
 
+```r
+> hist(WT_data$BW.gram,breaks=10,freq = F)
+> lines(density(WT_data$BW.gram),col="red")
 ```
+
+<img src="CBW2018_course-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="720px" />
 
 Data shape - histogram (3/4)
 ========================================================
 
-```{r,echo=F,out.width="850px",height="850px"}
-par(mfrow=c(2,1))
-  hist(WT_data$BW.gram,breaks=10,freq = F,
-       xlim=range(WT_data$BW.gram),xlab="Body Weight (gram)")
-  lines(density(WT_data$BW.gram),col="red",lwd=3)
-  boxplot(WT_data$BW.gram,xlab="Body Weight (gram)",horizontal=T, ylim=range(WT_data$BW.gram))
-  abline(v=mean(WT_data$BW.gram),col="forestgreen",lwd=3)
-par(mfrow=c(1,1))
-```
+<img src="CBW2018_course-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="850px" />
 
 
 Data shape - violin plot (4/4)
 ========================================================
 Left: 40%
 
-```{r,echo=F}
-par(mfrow=c(2,1))
-  hist(WT_data$BW.gram,breaks=10,freq = F,xlab="Body Weight (gram)",
-       xlim=range(WT_data$BW.gram))
-  lines(density(WT_data$BW.gram),col="red",lwd=3)
-  boxplot(WT_data$BW.gram,xlab="Body Weight (gram)",horizontal=T, ylim=range(WT_data$BW.gram))
-  abline(v=mean(WT_data$BW.gram),col="forestgreen",lwd=3)
-par(mfrow=c(1,1))
-```
+![plot of chunk unnamed-chunk-25](CBW2018_course-figure/unnamed-chunk-25-1.png)
 ***
 
-```{r, warning=FALSE, eval=T}
+
+```r
 #install.packages("vioplot")
 #library("vioplot")
 ```
-```{r,prompt=T}
-#vioplot(WT_data$BW.gram,
-#        ylim=range(WT_data$BW.gram),
-#        horizontal = T)
+
+```r
+> #vioplot(WT_data$BW.gram,
+> #        ylim=range(WT_data$BW.gram),
+> #        horizontal = T)
 ```
 
 Load data
 ========================================================
 
-```{r,prompt=T}
-pairs(alldata[,c(6:8)])
-alldata_16<-alldata[alldata$Age==16,]
-alldata_16<-alldata_16[alldata_16$Genotype!="db/+",]
-pairs(alldata_16[,c(6:8)])
 
-library(ggplot2)
-ggplot(alldata, aes(x=BW.gram, y=FatTissue.percent,color=Genotype)) + 
-  geom_point() + facet_grid(.~Age)
+```r
+> pairs(alldata[,c(6:8)])
+```
 
-ggplot(alldata_16, aes(x=BW.gram, y=FatTissue.percent,color=Genotype)) + 
-  geom_point() + geom_smooth(method=lm, se=FALSE, fullrange=F)
+![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-1.png)
 
-lmResult<-lm(FatTissue.percent~ BW.gram ,data=alldata_16)
-summary(lmResult)
+```r
+> alldata_16<-alldata[alldata$Age==16,]
+> alldata_16<-alldata_16[alldata_16$Genotype!="db/+",]
+> pairs(alldata_16[,c(6:8)])
+> 
+> library(ggplot2)
+```
 
-lmResult2<-lm(FatTissue.percent~ BW.gram + Genotype,data=alldata_16)
-summary(lmResult2)
+![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-2.png)
 
+```r
+> ggplot(alldata, aes(x=BW.gram, y=FatTissue.percent,color=Genotype)) + 
++   geom_point() + facet_grid(.~Age)
+```
+
+![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-3.png)
+
+```r
+> ggplot(alldata_16, aes(x=BW.gram, y=FatTissue.percent,color=Genotype)) + 
++   geom_point() + geom_smooth(method=lm, se=FALSE, fullrange=F)
+```
+
+![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-4.png)
+
+```r
+> lmResult<-lm(FatTissue.percent~ BW.gram ,data=alldata_16)
+> summary(lmResult)
+```
+
+```
+
+Call:
+lm(formula = FatTissue.percent ~ BW.gram, data = alldata_16)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-10.960  -2.962  -0.022   3.064  12.795 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -9.00036    3.41766  -2.633   0.0138 *  
+BW.gram      1.33289    0.07166  18.601   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.239 on 27 degrees of freedom
+Multiple R-squared:  0.9276,	Adjusted R-squared:  0.9249 
+F-statistic:   346 on 1 and 27 DF,  p-value: < 2.2e-16
+```
+
+```r
+> lmResult2<-lm(FatTissue.percent~ BW.gram + Genotype,data=alldata_16)
+> summary(lmResult2)
+```
+
+```
+
+Call:
+lm(formula = FatTissue.percent ~ BW.gram + Genotype, data = alldata_16)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.4622 -1.7859  0.1252  0.6606  6.5728 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    15.5905     3.5232   4.425 0.000153 ***
+BW.gram         0.3293     0.1285   2.562 0.016553 *  
+Genotypedb/db  30.8791     3.7719   8.187 1.14e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.823 on 26 degrees of freedom
+Multiple R-squared:  0.9798,	Adjusted R-squared:  0.9782 
+F-statistic: 629.5 on 2 and 26 DF,  p-value: < 2.2e-16
 ```
 
 
@@ -426,13 +598,7 @@ $$X \sim B(10,0.5)$$
 
 ***
 
-```{r,echo=F}
-x <- seq(0, 100, by=1)
-hx <- dbinom(x,100,0.2)
-plot(x, hx, type="l", lty=2, lwd=2, col="brown4",
-     xlab="x value",ylab="Density", main="Binominal distribution")
-
-```
+![plot of chunk unnamed-chunk-29](CBW2018_course-figure/unnamed-chunk-29-1.png)
 
 Normal distribution (3/10)
 ========================================================
@@ -448,16 +614,7 @@ $$
 
 ***
 
-```{r,echo=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
-x <- seq(-4, 4, length=100)
-hx <- dnorm(x)
-plot(x, hx, type="l", lty=2, lwd=2, col="blue4",
-     xlab="x value",ylab="Density", main="pdf (probability density function)\n of normal distribution",xaxt='n')
-axis(side=1, at=c(-4,-2,0,2,4),
-     labels=c(expression(paste(-2,sigma)),expression(-sigma),expression(mu),
-              expression(sigma),expression(paste(2,sigma))))
-
-```
+<img src="CBW2018_course-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="720px" />
 
 
 Distributions (4/10)
@@ -484,24 +641,20 @@ Normal distribution example (6/10)
 
 We can use **rnorm()** function to generate random values following a normal distribution. Here we produce 10 normally distributed numeric values with mean 8 and standard deviation of 3
 
-```{r}
+
+```r
 set.seed(2)
 rnorm(10,mean=8,sd=3)
 ```
 
+```
+ [1]  5.309256  8.554548 12.763536  4.608873  7.759245  8.397261 10.123864
+ [8]  7.280906 13.953422  7.583639
+```
+
 If you want to regenerate the exact random numbers, use the **set.seed()** function before generating any random numbers.
 
-```{r,echo=F}
-set.seed(2)
-data4plot<-rnorm(10,mean=8,sd=3)
-data4plot_h<-dnorm(data4plot,mean=8,sd=3)
-x <- seq(0,16,by=.1)
-hx <- dnorm(x,mean=8,sd=3)
-plot(x, hx, type="l", lty=2, lwd=2, col="blue4",
-     xlab="x value",ylab="Density", main="Normal distribution",xaxt="n")
-points(x=data4plot,y=data4plot_h,col="red",pch=16,cex=1.6)
-axis(side=1, at=c(2,5,8,11,14),labels=c(2,5,8,11,14))
-```
+![plot of chunk unnamed-chunk-32](CBW2018_course-figure/unnamed-chunk-32-1.png)
 
 
 Normal distribution example (7/10)
@@ -510,50 +663,42 @@ We can also use these functions to interrogate values assuming a normal distribu
 
 The probablity of a value being VERY close to 8 (or exactly 8 for discrete distributions) for a distribution of mean 8 and standard deviation 3.
 
-```{r}
+
+```r
 dnorm(8,mean=8,sd=3)
 ```
 
-```{r,echo=F}
-set.seed(2)
-data4plot<-rnorm(10,mean=8,sd=3)
-maxdensity<-dnorm(8,mean=8,sd=3)
-x <- seq(0,16,by=.1)
-hx <- dnorm(x,mean=8,sd=3)
-plot(x, hx, type="l", lty=2, lwd=2, col="blue4",ylim=c(0,maxdensity),
-     xlab="x value",ylab="Density", main="Normal distribution",xaxt="n")
-axis(side=1, at=c(2,5,8,11,14),labels=c(2,5,8,11,14))
-abline(h=maxdensity,v=8,col="pink",lwd=3,lty=2)
-
 ```
+[1] 0.1329808
+```
+
+![plot of chunk unnamed-chunk-34](CBW2018_course-figure/unnamed-chunk-34-1.png)
 
 Normal distribution example (8/10)
 ========================================================
 The probablity (P(X<=x)) of a value being less than 8 for a distribution of mean 8 and standard deviation 3.
-```{r}
+
+```r
 pnorm(8,mean=8,sd=3)
 ```
 
-```{r,echo=F}
-set.seed(2)
-data4plot<-rnorm(10,mean=8,sd=3)
-maxdensity<-dnorm(8,mean=8,sd=3)
-curve(dnorm(x,8,3),xlim=c(0,16),main='Normal distribution',
-      xlab="x value",ylab="Density",
-      col="blue4",xaxt="n",type="l", lty=2, lwd=2)
- cord.x <- c(0,seq(0,8,0.01),8)
- cord.y <- c(0,dnorm(seq(0,8,0.01),mean=8,sd=3),0)
-polygon(cord.x,cord.y,col='salmon')
-axis(side=1, at=c(2,5,8,11,14),labels=c(2,5,8,11,14))
-
 ```
+[1] 0.5
+```
+
+![plot of chunk unnamed-chunk-36](CBW2018_course-figure/unnamed-chunk-36-1.png)
 
 ***
 
 The value for which i have a 50 percent being greater than given a normal distribution of mean 8 and standard deviation 3.
 
-```{r}
+
+```r
 qnorm(0.5,mean=8,sd=3)
+```
+
+```
+[1] 8
 ```
 
 
@@ -562,16 +707,7 @@ Standard Normal distribution (9/10)
 
 $$X \sim Normal(\mu,\sigma^2)$$
 
-```{r,echo=F,fig.width=6,fig.height=5.5,dpi=300}
-x <- seq(-4, 4, length=100)
-hx <- dnorm(x)
-plot(x, hx, type="l", lty=2, lwd=2, col="blue4",
-     xlab="x value",ylab="Density", main="Normal distribution",xaxt='n')
-axis(side=1, at=c(-4,-2,0,2,4),
-     labels=c(expression(paste(-2,sigma)),expression(-sigma),expression(mu),
-              expression(sigma),expression(paste(2,sigma))))
-
-```
+![plot of chunk unnamed-chunk-38](CBW2018_course-figure/unnamed-chunk-38-1.png)
 ***
 
 Z-score transformation
@@ -583,29 +719,26 @@ Z=\frac{X-\mu}\sigma
 Z \sim Normal(0,1)
 $$
 
-```{r,echo=F,fig.width=6,fig.height=5.5,dpi=300}
-x <- seq(-4, 4, length=200)
-hx <- dnorm(x)
-plot(x, hx, type="l", lty=2, lwd=2, col="blue4",
-     xlab="z score",ylab="Density", main="standardised Normal distribution",xaxt='n')
-axis(side=1, at=c(-4,-2,0,2,4),
-     labels=c(-2,-1,0,1,2))
-
-```
+![plot of chunk unnamed-chunk-39](CBW2018_course-figure/unnamed-chunk-39-1.png)
 
 Standard Normal distribution (10/10)
 ========================================================
 
-```{r,fig.width=5,fig.height=4,dpi=300}
+
+```r
 x<-rnorm(10000,mean=5, sd=2.5)
 hist(x)
-
 ```
+
+![plot of chunk unnamed-chunk-40](CBW2018_course-figure/unnamed-chunk-40-1.png)
 ***
-```{r,fig.width=5,fig.height=4,dpi=300}
+
+```r
 ztransfer<-scale(x)
 hist(ztransfer)
 ```
+
+![plot of chunk unnamed-chunk-41](CBW2018_course-figure/unnamed-chunk-41-1.png)
 
 Time for an exercise!
 ========================================================
