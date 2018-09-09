@@ -14,9 +14,9 @@ Outline
 
 - data summary
 
-- hypothesis testing and ANOVA
+- hypothesis testing
 
-- correlation and linear regression
+- correlation, linear regression and ANOVA
 
 - we only have 1 hour and 45 minutes...
 
@@ -107,7 +107,7 @@ eg. blood pressure, body weight, height ...
 eg. gender, hair colour, RNA-seq read count...
 
 
-Recap some basic R functions (1/6)
+Recap some basic R functions (1/7)
 ========================================================
 - **str()**, **head()**, **dim()**, **colnames()** and **summary()** functions
 - more details please see [Reproducible R course](http://mrccsc.github.io/Reproducible-R/)
@@ -115,7 +115,7 @@ Recap some basic R functions (1/6)
 -- [Data types in R](http://mrccsc.github.io/Reproducible-R/r_course/presentations/slides/introToR_Session1.html#/datatypes)
 
 
-Recap some basic R functions (2/6)
+Recap some basic R functions (2/7)
 ========================================================
 
 **head()**: See the first 6 lines of an R object
@@ -134,7 +134,7 @@ Recap some basic R functions (2/6)
 6  F_+/+_8_2   F      +/+   8  2   17.38              22.0       146
 ```
 
-Recap some basic R functions (3/6)
+Recap some basic R functions (3/7)
 ========================================================
 see the how many rows and columns in "alldata" object
 
@@ -158,10 +158,12 @@ see column names of "alldata"
 [7] "FatTissue.percent" "GLU.mg.dL"        
 ```
 
-Recap some basic R functions (4/6)
+Recap some basic R functions (4/7)
 ========================================================
 
 **str()**: Compactly display the internal structure of an R object
+
+Make sure the data format is correct for each column.
 
 ```r
 > str(alldata)
@@ -179,7 +181,7 @@ Recap some basic R functions (4/6)
  $ GLU.mg.dL        : int  162 170 155 181 135 146 152 153 144 159 ...
 ```
 
-Recap some basic R functions (5/6)
+Recap some basic R functions (5/7)
 ========================================================
 
 
@@ -206,21 +208,69 @@ Recap some basic R functions (5/6)
                                                   
 ```
 
-Recap some basic R functions (6/6)
+Recap some basic R functions (6/7)
+========================================================
+
+
+```r
+> alldata$Age<-as.factor(alldata$Age)
+> summary(alldata)
+```
+
+```
+       mouseID   Sex     Genotype  Age           ID           BW.gram     
+ F_+/+_16_1: 1   F:35   +/+  :19   8 :37   Min.   : 1.00   Min.   :16.04  
+ F_+/+_16_2: 1   M:39   db/+ :15   16:37   1st Qu.: 2.00   1st Qu.:26.87  
+ F_+/+_16_3: 1          db/db:40           Median : 4.00   Median :38.15  
+ F_+/+_16_4: 1                             Mean   : 4.23   Mean   :37.36  
+ F_+/+_8_1 : 1                             3rd Qu.: 6.00   3rd Qu.:47.80  
+ F_+/+_8_2 : 1                             Max.   :10.00   Max.   :61.97  
+ (Other)   :68                                                            
+ FatTissue.percent   GLU.mg.dL    
+ Min.   :20.00     Min.   :131.0  
+ 1st Qu.:26.70     1st Qu.:195.8  
+ Median :54.15     Median :509.0  
+ Mean   :44.91     Mean   :448.1  
+ 3rd Qu.:60.70     3rd Qu.:664.2  
+ Max.   :71.10     Max.   :876.0  
+                                  
+```
+
+Recap some basic R functions (7/7)
 ========================================================
 
 **ftable()**: Create ‘flat’ contingency tables
 
 ```r
-ftable(alldata[,c("Sex","Genotype")])
+ftable(alldata[,c("Age","Genotype")])
 ```
 
 ```
     Genotype +/+ db/+ db/db
-Sex                        
-F              9    6    20
-M             10    9    20
+Age                        
+8             10    7    20
+16             9    8    20
 ```
+
+Spread of data - working with plots (boxplot)
+========================================================
+
+```r
+> library(ggplot2)
+> ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_boxplot()
+```
+
+![plot of chunk unnamed-chunk-10](CBW2018_course-figure/unnamed-chunk-10-1.png)
+
+Shape of data - working with plots 2 (Violin plot)
+========================================================
+
+```r
+> library(ggplot2)
+> ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_violin(position=position_dodge(width = 0.5)) +geom_boxplot(width=.1, outlier.colour=NA,position=position_dodge(width = 0.5))
+```
+
+![plot of chunk unnamed-chunk-11](CBW2018_course-figure/unnamed-chunk-11-1.png)
 
 
 Spread of data - use body weight from WT mice (1/4)
@@ -282,7 +332,7 @@ Left: 40%
 
 Boxplot
 
-<img src="CBW2018_course-figure/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" width="720px" />
 ***
 
 ```r
@@ -341,6 +391,8 @@ Spread of data -  work with plots (4/4)
 [1] 7.32
 ```
 
+
+
 Spread of data - more about boxplot (optional 1/3)
 ========================================================
 
@@ -351,24 +403,58 @@ Scatter plot: plot the WT mice's Body Weight against index
 > plot(WT_data$BW.gram,ylab="Body Weight (gram)")
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="720px" />
 
 Spread of data - work with plots (optional 2/3)
 ========================================================
 sort the data from min to max
 
-<img src="CBW2018_course-figure/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" width="720px" />
 ***
 
 start to see something here...
 
-<img src="CBW2018_course-figure/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-21-1.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" width="720px" />
 
 
 Spread of data - work with plots (optional 3/3)
 ========================================================
 
-<img src="CBW2018_course-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="750px" />
+<img src="CBW2018_course-figure/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="750px" />
+
+Data shape - histogram (1/4)
+========================================================
+
+
+```r
+> hist(WT_data$BW.gram,breaks=10)
+```
+
+<img src="CBW2018_course-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="720px" />
+
+Data shape - histogram (2/4)
+========================================================
+
+
+```r
+> hist(WT_data$BW.gram,breaks=10,freq = F)
+> lines(density(WT_data$BW.gram),col="red")
+```
+
+<img src="CBW2018_course-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="720px" />
+
+Data shape - histogram (3/4)
+========================================================
+
+<img src="CBW2018_course-figure/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" width="850px" />
+
+
+Data shape - violin plot (4/4)
+========================================================
+Left: 40%
+
+![plot of chunk unnamed-chunk-26](CBW2018_course-figure/unnamed-chunk-26-1.png)
+***
 
 
 Spread of data - Variance and Standard deviation (1/3)
@@ -420,335 +506,523 @@ More about SD and Variance (3/3)
 
 - in many analysis, variances are used more often, i.e. F-test
 
-Data shape - histogram (1/4)
+Hypothesis testing and ANOVA
 ========================================================
+
+- SD (standard deviation) and SE (standard error; standard error of sample mean)
+
+- Confidence Interval (CI)
+
+- Hypothesis testing
+
+ -- parametric test:e.g. t-test
+
+ -- non-parametric test: e.g. Wilcoxon test; chi-square test and Fisher's exact test
+
+- Analysis of Variance (ANOVA)
+
+
+Statistical tests
+========================================================
+
+On top of descriptive statistics, R has several statistical tests covering a range of problems and data types.
+
+Some common tests include:
+- var.test() - Comparing 2 variances (Fisher's F test)
+- t.test() - Comparing 2 sample means with normal errors (Student's t-test)
+- wilcox.test() - Comparing 2 means with non-normal errors (Wilcoxon's rank test)
+- fisher.test() - Testing for independence of 2 variables in a contingency table (Fisher's exact test)
+
+
+Hypothesis testing for mean - t-test (1/8)
+========================================================
+
+**t.test()**
+
+*one-sample t-test*
+
+```r
+t.test(groupA,mu=something)
+```
+*independent t-test*
+
+We are going to discuss this case here.
+
+```r
+t.test(groupA,groupB,paired=FALSE)
+```
+*paired t-test*
+
+```r
+t.test(Patients_before_treatment,Patients_after_treatment,paired=TRUE)
+```
+
+Hypothesis testing for mean - Load data (2/8)
+========================================================
+
+Use the WT dataset as example: Is the body weight of WT in Age 8 weeks and Age 16 weeks different. For the purpose of this session, let's assume the mouse body weight is normally distributed in WT 8 weeks and WT 16 weeks.
+
 
 
 ```r
-> hist(WT_data$BW.gram,breaks=10)
+WT_data<-alldata[alldata$Genotype=="+/+",]
+boxplot(BW.gram~Age,data=WT_data)
 ```
-
-<img src="CBW2018_course-figure/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" width="720px" />
-
-Data shape - histogram (2/4)
-========================================================
-
-
-```r
-> hist(WT_data$BW.gram,breaks=10,freq = F)
-> lines(density(WT_data$BW.gram),col="red")
-```
-
-<img src="CBW2018_course-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="720px" />
-
-Data shape - histogram (3/4)
-========================================================
-
-<img src="CBW2018_course-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="850px" />
-
-
-Data shape - violin plot (4/4)
-========================================================
-Left: 40%
-
-![plot of chunk unnamed-chunk-25](CBW2018_course-figure/unnamed-chunk-25-1.png)
-***
-
-
-```r
-#install.packages("vioplot")
-#library("vioplot")
-```
-
-```r
-> #vioplot(WT_data$BW.gram,
-> #        ylim=range(WT_data$BW.gram),
-> #        horizontal = T)
-```
-
-Load data
-========================================================
-
-
-```r
-> pairs(alldata[,c(6:8)])
-```
-
-![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-1.png)
-
-```r
-> alldata_16<-alldata[alldata$Age==16,]
-> alldata_16<-alldata_16[alldata_16$Genotype!="db/+",]
-> pairs(alldata_16[,c(6:8)])
-> 
-> library(ggplot2)
-```
-
-![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-2.png)
-
-```r
-> ggplot(alldata, aes(x=BW.gram, y=FatTissue.percent,color=Genotype)) + 
-+   geom_point() + facet_grid(.~Age)
-```
-
-![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-3.png)
-
-```r
-> ggplot(alldata_16, aes(x=BW.gram, y=FatTissue.percent,color=Genotype)) + 
-+   geom_point() + geom_smooth(method=lm, se=FALSE, fullrange=F)
-```
-
-![plot of chunk unnamed-chunk-28](CBW2018_course-figure/unnamed-chunk-28-4.png)
-
-```r
-> lmResult<-lm(FatTissue.percent~ BW.gram ,data=alldata_16)
-> summary(lmResult)
-```
-
-```
-
-Call:
-lm(formula = FatTissue.percent ~ BW.gram, data = alldata_16)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--10.960  -2.962  -0.022   3.064  12.795 
-
-Coefficients:
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept) -9.00036    3.41766  -2.633   0.0138 *  
-BW.gram      1.33289    0.07166  18.601   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 5.239 on 27 degrees of freedom
-Multiple R-squared:  0.9276,	Adjusted R-squared:  0.9249 
-F-statistic:   346 on 1 and 27 DF,  p-value: < 2.2e-16
-```
-
-```r
-> lmResult2<-lm(FatTissue.percent~ BW.gram + Genotype,data=alldata_16)
-> summary(lmResult2)
-```
-
-```
-
-Call:
-lm(formula = FatTissue.percent ~ BW.gram + Genotype, data = alldata_16)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--5.4622 -1.7859  0.1252  0.6606  6.5728 
-
-Coefficients:
-              Estimate Std. Error t value Pr(>|t|)    
-(Intercept)    15.5905     3.5232   4.425 0.000153 ***
-BW.gram         0.3293     0.1285   2.562 0.016553 *  
-Genotypedb/db  30.8791     3.7719   8.187 1.14e-08 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.823 on 26 degrees of freedom
-Multiple R-squared:  0.9798,	Adjusted R-squared:  0.9782 
-F-statistic: 629.5 on 2 and 26 DF,  p-value: < 2.2e-16
-```
-
-
-Time for an exercise!
-========================================================
-
-Exercise on this part can be found [here](./exercises/Session1_exercise1_part1.html)
-
-
-Answers to exercise.
-========================================================
-
-Answers can be found [here](./answers/Session1_answers1_part1.html)
-
-
-
-Distributions (1/10)
-========================================================
-- Binomial distribution
-- Normal distribution
-
-Binomial distribution (2/10)
-========================================================
-
-Example: flip a fair (50% of head and 50% of tail) coin 10 times
-
-$$X \sim Binom(n,p)$$
-
-$$
-n=\text{number of experiment}
-\\
-p=\text{probability of success}
-$$
-
-$$
-E(X)=np
-\\
-Var(X)=\frac{p(1-p)}n
-\\
-$$
-
-In this case:
-
-$$X \sim B(10,0.5)$$
-
-***
-
-![plot of chunk unnamed-chunk-29](CBW2018_course-figure/unnamed-chunk-29-1.png)
-
-Normal distribution (3/10)
-========================================================
-
-Example: body temperature of 150 MRC CSC staff
-
-$$X \sim Normal(\mu,\sigma^2)
-\\
-\mu=mean
-\\
-\sigma=\text{standard deviation}
-$$
-
-***
-
-<img src="CBW2018_course-figure/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" width="720px" />
-
-
-Distributions (4/10)
-========================================================
-R comes with functions for extracting information from most common distibutions types. An example of standard R functions for dealing with distibution can be seen here using the normal distributions.
-
-- pnorm - cumulative distribution for x, aka c.d.f. (cumulative distribution function)
-- qnorm - inverse of pnorm (from probability gives x)
-- dnorm - distribution density
-- rnorm - random number from normal distribution
-
-Distributions (5/10)
-========================================================
-Similar functions are available for other distibution types including:
-
-- pbinom (binomial)
-- pt (T distribution)
-- pnbinom (negative binomial),
-- phyper (hypergeometric)
-
-
-Normal distribution example (6/10)
-========================================================
-
-We can use **rnorm()** function to generate random values following a normal distribution. Here we produce 10 normally distributed numeric values with mean 8 and standard deviation of 3
-
-
-```r
-set.seed(2)
-rnorm(10,mean=8,sd=3)
-```
-
-```
- [1]  5.309256  8.554548 12.763536  4.608873  7.759245  8.397261 10.123864
- [8]  7.280906 13.953422  7.583639
-```
-
-If you want to regenerate the exact random numbers, use the **set.seed()** function before generating any random numbers.
 
 ![plot of chunk unnamed-chunk-32](CBW2018_course-figure/unnamed-chunk-32-1.png)
 
 
-Normal distribution example (7/10)
+Independent t-test example - Calculating variance (3/8)
 ========================================================
-We can also use these functions to interrogate values assuming a normal distribution for the data.
+What is the difference in variances between WT Age 8 weeks and WT Age 16 weeks?
 
-The probablity of a value being VERY close to 8 (or exactly 8 for discrete distributions) for a distribution of mean 8 and standard deviation 3.
+F test
 
-
-```r
-dnorm(8,mean=8,sd=3)
-```
-
-```
-[1] 0.1329808
-```
-
-![plot of chunk unnamed-chunk-34](CBW2018_course-figure/unnamed-chunk-34-1.png)
-
-Normal distribution example (8/10)
-========================================================
-The probablity (P(X<=x)) of a value being less than 8 for a distribution of mean 8 and standard deviation 3.
-
-```r
-pnorm(8,mean=8,sd=3)
-```
-
-```
-[1] 0.5
-```
-
-![plot of chunk unnamed-chunk-36](CBW2018_course-figure/unnamed-chunk-36-1.png)
-
-***
-
-The value for which i have a 50 percent being greater than given a normal distribution of mean 8 and standard deviation 3.
-
-
-```r
-qnorm(0.5,mean=8,sd=3)
-```
-
-```
-[1] 8
-```
-
-
-Standard Normal distribution (9/10)
-========================================================
-
-$$X \sim Normal(\mu,\sigma^2)$$
-
-![plot of chunk unnamed-chunk-38](CBW2018_course-figure/unnamed-chunk-38-1.png)
-***
-
-Z-score transformation
-
-$$
-Z=\frac{X-\mu}\sigma
+$$F= \frac{S^2_x}{S^2_y}
 \\
+S^2_x:\text{ sample varience for group x}
 \\
-Z \sim Normal(0,1)
+S^2_y:\text{ sample varience for gorup y}
+\\\\
+\text{degrees of freedom for the numerator}=n_x-1
+\\
+\text{degrees of freedom for the denominator}=n_y-1
 $$
 
-![plot of chunk unnamed-chunk-39](CBW2018_course-figure/unnamed-chunk-39-1.png)
 
-Standard Normal distribution (10/10)
+Calculating F test with R (4/8)
 ========================================================
+
+We can test for any differences in variances between WT 8 weeks and WT 16 weeks with an F-test using the var.test() function.
+
+$$H_0:\sigma_{WT_8w}^{2}= \sigma_{WT_16w}^{2}
+\\
+H_a:\sigma_{WT_8w}^{2}\neq \sigma_{WT_16w}^{2}$$
 
 
 ```r
-x<-rnorm(10000,mean=5, sd=2.5)
-hist(x)
+WT_8w_data<-WT_data[WT_data$Age=="8" ,]
+WT_16w_data<-WT_data[WT_data$Age=="16" ,]
+var.test(WT_8w_data$BW.gram,WT_16w_data$BW.gram)
 ```
 
-![plot of chunk unnamed-chunk-40](CBW2018_course-figure/unnamed-chunk-40-1.png)
+```
+
+	F test to compare two variances
+
+data:  WT_8w_data$BW.gram and WT_16w_data$BW.gram
+F = 0.53289, num df = 9, denom df = 8, p-value = 0.3673
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.1223004 2.1858962
+sample estimates:
+ratio of variances 
+         0.5328912 
+```
+
+R objects (s3 and s4) (5/8)
+========================================================
+Left:30% The data type holding the result var.test() is a little more complex than the data types we have looked.
+
+In R, special objects (S3 or S4 objects) can be created which have methods associated to them. The result from var.test is an object of class htest.
+
+Since we have not come across this before, in order to discover its structure we can use the str() function with the object of interest as the argument.
+
+```r
+result <- var.test(WT_8w_data$BW.gram,WT_16w_data$BW.gram)
+str(result)
+```
+
+```
+List of 9
+ $ statistic  : Named num 0.533
+  ..- attr(*, "names")= chr "F"
+ $ parameter  : Named int [1:2] 9 8
+  ..- attr(*, "names")= chr [1:2] "num df" "denom df"
+ $ p.value    : num 0.367
+ $ conf.int   : num [1:2] 0.122 2.186
+  ..- attr(*, "conf.level")= num 0.95
+ $ estimate   : Named num 0.533
+  ..- attr(*, "names")= chr "ratio of variances"
+ $ null.value : Named num 1
+  ..- attr(*, "names")= chr "ratio of variances"
+ $ alternative: chr "two.sided"
+ $ method     : chr "F test to compare two variances"
+ $ data.name  : chr "WT_8w_data$BW.gram and WT_16w_data$BW.gram"
+ - attr(*, "class")= chr "htest"
+```
+
+
+R objects (s3 and s4) (6/8)
+========================================================
+Now we know the structure and class of the htest object we can access the slots containing information we want just as with a named list.
+
+The p-value
+
+```r
+result$p.value
+```
+
+```
+[1] 0.3673436
+```
+The statistic
+
+```r
+result$statistic
+```
+
+```
+        F 
+0.5328912 
+```
+The data used in function call
+
+```r
+result$data.name
+```
+
+```
+[1] "WT_8w_data$BW.gram and WT_16w_data$BW.gram"
+```
+
+Independent t-test (7/8)
+========================================================
+We have ascertained that Ration1 and Ration2 have similar variances. We can therefore perform a standard t-test to assess the significance of differences between these groups.
+
+$$H_0:\mu_{Ration1}= \mu_{Ration2}
+\\
+H_a:\mu_{Ration1}\neq \mu_{Ration2}$$
+
+
+```r
+test_res <- t.test(WT_8w_data$BW.gram,WT_16w_data$BW.gram,alternative ="two.sided", var.equal = T)
+test_res
+```
+
+```
+
+	Two Sample t-test
+
+data:  WT_8w_data$BW.gram and WT_16w_data$BW.gram
+t = -3.3985, df = 17, p-value = 0.003419
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -9.106749 -2.130584
+sample estimates:
+mean of x mean of y 
+ 20.79800  26.41667 
+```
+
+T-test example - Specifying a formula (8/8)
+========================================================
+The same result to that shown could be achieved by specifying a formula for the comparison. Here we wish to compare 8 weeks versus 16 weeks so we could simply specify the formula and the data to be used.
+
+
+```r
+result_formula <- t.test(BW.gram~Age,WT_data,alternative ="two.sided", var.equal = T)
+result_formula
+```
+
+```
+
+	Two Sample t-test
+
+data:  BW.gram by Age
+t = -3.3985, df = 17, p-value = 0.003419
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -9.106749 -2.130584
+sample estimates:
+ mean in group 8 mean in group 16 
+        20.79800         26.41667 
+```
+
+Non-parametric test
+========================================================
+  
+  Non-parametric statistical hypothesis test is a test that is not based on probability distribution for the dependant variable. 
+
+It doesn't repuire the dependent varible to be normally distributed.
+
+**wilcox.test()**
+
+Wilcoxon Signed-Rank Test is one of the Non-parametric statistical hypothesis tests. It is a good alternative to t-tests without assuming the dependent variables to follow the normal distribution.
+
+t-test and Wilcoxon test alternatives
+========================================================
+
+**t.test()**
+
+*one-sample t-test*
+
+```r
+t.test(groupA,mu=something)
+```
+*independent t-test*
+
+```r
+t.test(groupA,groupB,paired=FALSE)
+```
+*paired t-test*
+
+```r
+t.test(groupA,groupB,paired=TRUE)
+```
 ***
+**wilcox.test()**
+
+*one-sample Wilcoxon: Signed-Rank Test*
 
 ```r
-ztransfer<-scale(x)
-hist(ztransfer)
+wilcox.test(groupA,mu=something)
+```
+*Wilcoxon Rank Sum Test: Mann-Whitney U*
+
+```r
+wilcox.test(groupA,groupB,paired=FALSE)
+```
+*paired Wilcoxon:Signed-Rank Test*
+
+```r
+wilcox.test(groupA,groupB,paired=TRUE)
 ```
 
-![plot of chunk unnamed-chunk-41](CBW2018_course-figure/unnamed-chunk-41-1.png)
-
-Time for an exercise!
+Wilcoxon test - wilcox.test()
 ========================================================
 
-Exercise on this part can be found [here](./exercises/Session1_exercise1.html)
+Wilcoxon Signed-Rank Test is one of the Non-parametric statistical hypothesis tests. It is a good alternative to t-tests without assuming them to follow the normal distribution.
 
+$$H_0: \text{median}_{a}- \text{median}_{b} = 0
+\\
+H_a: \text{median}_{a}- \text{median}_{b}\neq 0$$
 
-Answers to exercise.
+Back to our mouse dataset
 ========================================================
 
-Answers can be found [here](./answers/Session1_answers1.html)
+Is there body weight different between WT and KO mice?
 
+
+```r
+WT_dbdb_data<-alldata[alldata$Genotype!="db/+",]
+WT_dbdb_data<-droplevels(WT_dbdb_data)
+boxplot(BW.gram~Genotype,data=WT_dbdb_data)
+```
+
+![plot of chunk unnamed-chunk-46](CBW2018_course-figure/unnamed-chunk-46-1.png)
+
+
+Wilcoxon test
+========================================================
+**qqnorm()** and **qqline()**
+
+Check normal distribution with normal quantile plots for WT data
+
+
+```r
+WT4wilcox<-WT_dbdb_data[WT_dbdb_data$Genotype=="+/+",]
+
+qqnorm(WT4wilcox$BW.gram)
+qqline(WT4wilcox$BW.gram)
+```
+
+![plot of chunk unnamed-chunk-47](CBW2018_course-figure/unnamed-chunk-47-1.png)
+
+```r
+shapiro.test(WT4wilcox$BW.gram)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  WT4wilcox$BW.gram
+W = 0.95302, p-value = 0.4441
+```
+
+Wilcoxon test
+========================================================
+**qqnorm()** and **qqline()**
+
+Check normal distribution with normal quantile plots for db/db data
+
+
+```r
+KO4wilcox<-WT_dbdb_data[WT_dbdb_data$Genotype=="db/db",]
+qqnorm(KO4wilcox$BW.gram)
+qqline(KO4wilcox$BW.gram)
+```
+
+![plot of chunk unnamed-chunk-48](CBW2018_course-figure/unnamed-chunk-48-1.png)
+
+```r
+shapiro.test(KO4wilcox$BW.gram)
+```
+
+```
+
+	Shapiro-Wilk normality test
+
+data:  KO4wilcox$BW.gram
+W = 0.90465, p-value = 0.002618
+```
+
+Wilcoxon test (Mann-Whitney U)
+========================================================
+**wilcox.test()**
+
+
+```r
+wilcox.test(WT4wilcox$BW.gram,KO4wilcox$BW.gram, paired=F)
+```
+
+```
+
+	Wilcoxon rank sum test
+
+data:  WT4wilcox$BW.gram and KO4wilcox$BW.gram
+W = 0, p-value = 1.431e-15
+alternative hypothesis: true location shift is not equal to 0
+```
+
+fisher.test()
+========================================================
+
+Given two gene lists, tests the significance of their overlap in comparison with a genomic background.
+
+$$H_0:\text{ the odds ratio is no larger than 1}
+\\
+H_a:\text{ the odds ratio is larger than 1 }$$
+
+Assuming there are 20,000 genes in the mouse genome, we have gene list A (300 genes) and B (50 genes). The number of overlap genes between list A and B is 5. Is the overlap between the two list significant?
+
+fisher.test()
+========================================================
+create a contigency table
+
+
+```r
+> cmatrix<-matrix(c(5,40,295,19960),byrow=T,ncol=2,dimnames=list(c("In.B","Not.In.B"),c("In.A","Not.In.A")))
+> cmatrix
+```
+
+```
+         In.A Not.In.A
+In.B        5       40
+Not.In.B  295    19960
+```
+
+fisher.test()
+========================================================
+**fisher.test()**
+
+
+```r
+fisher.test(cmatrix)
+```
+
+```
+
+	Fisher's Exact Test for Count Data
+
+data:  cmatrix
+p-value = 0.0005133
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  2.585939 21.637276
+sample estimates:
+odds ratio 
+  8.454877 
+```
+
+  
+ANOVA (1/5)
+========================================================
+  
+  Compute analysis of variance (or deviance), a.k.a. ANOVA, for one or more fitted model objects.
+
+ANOVA is a statistical method that uses F-test to test
+
+$$H_0:\mu_{1}= \mu_{2}=... \mu_{k}$$
+  
+  by comparing the variability between groups to the variability within groups
+  
+Assume that 
+
+(1) all samples are independent and have >2 categorical groups; 
+
+(2) dependent variable is continuous
+
+(3) data of each group is normally distributed
+
+(4) homogeneneity of variances
+
+ANOVA (2/5)
+========================================================
+
+```r
+boxplot(BW.gram~Genotype,data=alldata)
+```
+
+![plot of chunk unnamed-chunk-52](CBW2018_course-figure/unnamed-chunk-52-1.png)
+
+
+ANOVA - use the lm() function (3/5)
+========================================================
+
+```r
+lmPG<-lm(formula = BW.gram ~ Genotype,data = alldata)
+lmPG
+```
+
+```
+
+Call:
+lm(formula = BW.gram ~ Genotype, data = alldata)
+
+Coefficients:
+  (Intercept)   Genotypedb/+  Genotypedb/db  
+       23.459          5.131         23.796  
+```
+
+ANOVA - use the anova() function (4/5)
+========================================================
+
+```r
+anova_PG<-anova(lmPG)
+anova_PG
+```
+
+```
+Analysis of Variance Table
+
+Response: BW.gram
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+Genotype   2 8741.8  4370.9  101.48 < 2.2e-16 ***
+Residuals 71 3058.0    43.1                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+ANOVA - post-hoc analysis (5/5)
+========================================================
+**TukeyHSD** - Test which of the groups have different means
+
+
+```r
+TukeyHSD(aov(lmPG))
+```
+
+```
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = lmPG)
+
+$Genotype
+                diff        lwr      upr     p adj
+db/+-+/+    5.131193 -0.2950406 10.55743 0.0676741
+db/db-+/+  23.796276 19.4190332 28.17352 0.0000000
+db/db-db/+ 18.665083 13.9085869 23.42158 0.0000000
+```
 
