@@ -502,9 +502,9 @@ Independent t-test (7/8)
 ========================================================
 We have ascertained that Ration1 and Ration2 have similar variances. We can therefore perform a standard t-test to assess the significance of differences between these groups.
 
-$$H_0:\mu_{Ration1}= \mu_{Ration2}
+$$H_0:\mu_{WT_{8w}}= \mu_{WT_{16w}}
 \\
-H_a:\mu_{Ration1}\neq \mu_{Ration2}$$
+H_a:\mu_{WT_{8w}}\neq \mu_{WT_{16w}}$$
 
 ```{r}
 test_res <- t.test(WT_8w_data$BW.gram,WT_16w_data$BW.gram,alternative ="two.sided", var.equal = T)
@@ -704,3 +704,523 @@ ANOVA - post-hoc analysis (5/5)
 TukeyHSD(aov(lmPG))
 ```
 
+Correlation (1/6)
+=========================================================
+
+A common task in statistical analysis is to investigate the linear relationship between pairs of numeric vectors.
+
+This can be done by identifying the correlation between numeric vectors using the **cor()** function in R.
+
+In this example we use **cor()** to identify the Pearson correlation between two variables.  The **method** argument may be set to make use of different correlation methods.
+
+- Perfectly posively correlated vectors will return 1
+- Perfectly negatively correlated vectors will return -1
+- Vectors showing no or little linear correlation will be close to 0.
+
+
+Correlation between vectors (2/6)
+=========================================================
+
+```{r,prompt=T}
+x <- rnorm(100,10,2)
+z <- rnorm(100,10,2)
+y <- x
+cor(x,y) #
+cor(x,-y)
+cor(x,z)
+```
+***
+```{r,echo=F,prompt=T}
+par(mfrow=c(3,1))
+plot(x,y) #
+plot(x,-y)
+plot(x,z)
+
+par(mfrow=c(1,1))
+```
+
+Correlation example (3/6)
+=========================================================
+
+Example of our mouse data. We would like to see whether there is a relationship between body weight and the percentage of fat tissue in the WT mice.
+
+```{r,prompt=T}
+KO_data<-alldata[alldata$Genotype=="db/db",]
+head(KO_data)
+cor(KO_data$BW.gram,KO_data$FatTissue.percent)
+
+```
+***
+```{r,echo=F,prompt=T,fig.width=6,fig.height=5.5,dpi=300}
+library("ggplot2")
+p <- ggplot(KO_data, aes(BW.gram, FatTissue.percent))
+p + geom_point()+
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14,face="bold"))
+
+```
+
+Correlation over a matrix (4/6)
+=========================================================
+left: 70%
+Often we wish to apply correlation analysis to all columns or rows in a matrix in a pair-wise manner. To do this in R, we can simply pass the **cor()** function a single argument of the numeric matrix of interest. The **cor()** function will then perform all pair-wise correlations between columns.
+
+- subset iris dataset
+```{r,prompt=T}
+mouse4cor<-KO_data[,c(6:8)]; 
+
+```
+
+Correlation over a matrix (5/6)
+=========================================================
+```{r,prompt=T}
+cor(mouse4cor)
+```
+```{r,eval=T,echo=F,fig.width=4,fig.height=3.5,dpi=300}
+image(cor(mouse4cor),axes=F)
+mtext(colnames(mouse4cor),side=2,at=seq(0,1,length.out=3),las=1,cex=0.6)
+mtext(colnames(mouse4cor),side=1,at=seq(0,1,length.out=3),las=2,cex=0.6)
+
+```
+
+Correlation (6/6)
+========================================================
+```{r,prompt=T,fig.width=5,fig.height=5,dpi=300,out.width="650px",height="650px"}
+pairs(mouse4cor)
+```
+Linear regression (1/23)
+=========================================================
+
+We have seen how we can find the linear correlation between two sets of variables using **cor()** function.
+
+R also provides a comprehensive set of tools for regression analysis including the well used linear modeling function **lm()**
+
+- least square method
+
+*minimize the vertical distance between the fitted line and data points* 
+
+```{r,echo=F,prompt=T,fig.width=3,fig.height=3,dpi=300,out.width="650px",height="650px"}
+library("ggplot2")
+
+pwh <-  ggplot(KO_data, aes(FatTissue.percent, BW.gram))
+pwh + geom_point() + labs(x = "Body weight (gram)",y="Fat Tissue (%)") + 
+   stat_smooth(method="lm",se=T)
+
+```
+
+
+Linear regression (2/23)
+=========================================================
+left: 70%
+We use KO mouse dataset as example and see whether we can use mouse body weight to predict the percentage of fat tissue.
+```{r,prompt=T}
+KO_data<-alldata[alldata$Genotype=="db/db",]
+head(KO_data)
+
+```
+***
+```{r,echo=F,prompt=T,fig.width=4,fig.height=4,dpi=300,out.width="820px",height="820px"}
+pwh <-  ggplot(KO_data, aes(BW.gram, FatTissue.percent))
+pwh + geom_point() + labs(x = "Body weight (gram)",y="Fat Tissue (%)")
+```
+
+
+Linear regression (3/23)
+=========================================================
+The **lm()** function fits a linear regression to your data and provides useful information on the generated fit.
+
+In the example below we fit a linear model using  **lm()** on the *KO_data* dataset with *FatTissue.percent* (Y) as the dependent variable and *BW.gram* (X) as the explanatory variable.
+```{r,prompt=T}
+lmResult<-lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
+lmResult
+```
+
+
+Interpret output of lm() (4/23)
+=========================================================
+
+As we have seen, printing the model result provides the intercept and slope of line.
+To get some more information on the model we can use the **summary()** function
+```{r,prompt=T}
+summary(lmResult)
+```
+
+Interpret output of lm() - coefficients (5/23)
+=========================================================
+left: 70%
+```{r,prompt=T}
+lmResult$coefficients
+```
+From the **$coefficients** of object *lmResult*, we know the equation for the best fit is
+
+**$$Y = 36.6140076 + 0.5026053 *X$$**
+
+**$$f(x)  = b_0 + b_1x$$**
+
+$$b_0\text{: the value of f(x) when x =0}$$
+
+```{r}
+# the Intercept 36.6140076 is the expected percentage of fat tissue of a 0 body weight
+# not interesting to any biological questions
+```
+
+$$b_1\text{: the amount of f(x) will change when x changes 1 unit}$$
+
+```{r}
+# For every gram increased in the mice body weight, we expect 0.50 (%) increased in the Fat tissue
+
+```
+***
+```{r,echo=F,prompt=T,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
+pwh <-  ggplot(KO_data, aes(BW.gram, FatTissue.percent))
+pwh + geom_point() + stat_smooth(method = "lm",se=F) +
+  labs(x = "Body weight (gram)",y="Fat Tissue (%)")
+```
+
+
+More about coefficients (6/23)
+=========================================================
+
+Predict the percentage of fat tissue with the body weight information.
+
+If we have 3 KO mice with weight = 40, 55 and 66 grams, how do we predict their percentage of fat tissue?
+
+
+Use the information from the *$coefficients*
+```{r,prompt=T}
+new_mouse_bw<-c(40,55,66)
+beta0<-lmResult$coefficients[1]
+beta1<-lmResult$coefficients[2]
+
+predicted_new_fat<-beta0+beta1*new_mouse_bw
+predicted_new_fat
+```
+
+Or use the *predict()*
+```{r}
+new_mouse_bw_df <- data.frame(BW.gram=c(40,55,66))
+cleaver_predicted_fat<-predict(lmResult,new_mouse_bw_df)
+cleaver_predicted_fat
+
+```
+
+
+
+Interpret output of lm() - residuals (7/23)
+=========================================================
+
+The **residuals** are the difference between the predicted and actual values.
+To retrieve the residuals we can access the slot or use the **resid()** function.
+
+```{r,prompt=T,echo=T}
+summary(resid(lmResult))
+summary(lmResult$residual)
+```
+Ideally you would want your residuals to be normally distributed around 0.
+
+$$
+E[e_{i}]=0
+$$
+
+More about residuals (8/23)
+=========================================================
+
+Plot the residuals
+
+```{r,echo=T,fig.width=9,fig.height=7,dpi=300,out.width="1000",height="750"}
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(0,120),
+     ylab="Fat tissue (%)",xlab="body weight (gram)")
+abline(lmResult,col="blueviolet",lwd=3, lty=1)
+
+```
+
+More about residuals (9/23)
+=========================================================
+
+Residual is the vertical distance between the observed data and the regression line. It has the same unit as the dependent variable.
+
+```{r,echo=F,fig.width=9,fig.height=7,dpi=300,out.width="1020",height="800"}
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(0,120),
+     ylab="Fat tissue (%)",xlab="body weight (gram)")
+abline(lmResult,col="blueviolet",lwd=3, lty=1)
+y<-KO_data$FatTissue.percent;x<-KO_data$BW.gram
+yhat<-predict(lmResult)
+for (i in 1:nrow(KO_data)){
+  lines(c(x[i],x[i]),
+        c(y[i],yhat[i]),
+        col="red",lwd=2)
+}
+```
+
+More about residuals (10/23)
+=========================================================
+
+SSE shows the residual variability
+
+It shows the variability that cannot be explained by the regression model
+
+```{r,echo=F,fig.width=9,fig.height=7,dpi=300,out.width="1020",height="800"}
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(-30,150),
+     ylab="Fat tissue (%)",xlab="body weight (gram)")
+abline(lmResult,col="blueviolet",lwd=3, lty=1)
+y<-KO_data$FatTissue.percent;x<-KO_data$BW.gram
+yhat<-predict(lmResult)
+for (i in 1:nrow(KO_data)){
+  lines(c(x[i],x[i]),
+        c(y[i],yhat[i]),
+        col="red",lwd=2)
+}
+```
+***
+$$
+Error_i = y_i - \hat{y_i}
+\\
+y_i\text{: the observed weight of ith kid}
+\\
+\hat{y_i}\text{: the predicted weight of ith kid}
+\\
+Error_i^2  = (y_i - \hat{y_i})^2
+\\
+\text{- sum of the square of the residuals (SSE)}
+\\
+SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
+$$
+
+
+
+More about residuals (11/23)
+=========================================================
+
+Plot the residuals against the independent variable (X), i.e. the height. It makes the residual accessment easiler by eyes.
+
+```{r,echo=T,fig.width=9,fig.height=7,dpi=300,out.width="1000px",height="750px"}
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,30),
+     ylab="residuals (fat tissue %)",xlab="body weight (gram)")
+abline(h=0,col="blueviolet",lwd=3, lty=1)
+
+```
+
+More about residuals (12/23)
+=========================================================
+
+Plot the residuals against the independent variable (X), i.e. the height. 
+
+```{r,echo=F,fig.width=9,fig.height=7,dpi=300,out.width="1020",height="800px"}
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,150),
+     ylab="residuals (fat tissue %)",xlab="body weight (gram)")
+abline(h=0,col="blueviolet",lwd=3, lty=1)
+x<-KO_data$BW.gram
+resid<-lmResult$residuals
+for (i in 1:nrow(KO_data)){
+  lines(c(x[i],x[i]),c(0,resid[i]), col="red",lwd=2)
+}
+```
+
+More about residuals (13/23)
+=========================================================
+
+Plot the residuals against the independent variable (X)
+
+```{r,echo=F,fig.width=5,fig.height=5,dpi=300,out.width="720px",height="720px"}
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,150),
+     ylab="residuals (fat tissue %)",xlab="body weight (gram)")
+abline(h=0,col="blueviolet",lwd=3, lty=1)
+x<-KO_data$BW.gram
+resid<-lmResult$residuals
+for (i in 1:nrow(KO_data)){
+  lines(c(x[i],x[i]),c(0,resid[i]), col="red",lwd=2)
+}
+
+```
+
+***
+$$
+Error_i = y_i - \hat{y_i}
+\\
+
+Error_i^2  = (y_i - \hat{y_i})^2
+\\
+\text{- sum of the square of the residuals (SSE)}
+\\
+SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
+$$
+
+
+Interpret output of lm() - R-squared (14/23)
+=========================================================
+
+- The **R-squared** value represents the proportion of variability in the response variable that is explained by the explanatory variable.
+
+- A high **R-squared** here indicates that the line fits closely to the data.
+
+```{r,prompt=T,echo=T}
+summary(lmResult)$r.squared
+```
+
+
+More about R-squared (15/23)
+=========================================================
+
+- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+
+```{r,prompt=T,echo=T}
+KO_data$FatTissue.percent
+```
+
+More about R-squared (16/23)
+=========================================================
+
+- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+
+- mean might be a good choice
+
+```{r,prompt=T,echo=T}
+mean(KO_data$FatTissue.percent)
+```
+
+- If we have a new child, we could assume that the kid's weight is around 38.384 pounds.
+
+More about R-squared (17/23)
+=========================================================
+
+- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+
+- mean might be a good choice
+
+```{r,echo=F,fig.width=5,fig.height=5,dpi=300,out.width="720px",height="720px"}
+diff_df<-KO_data$FatTissue.percent-mean(KO_data$FatTissue.percent)
+plot(KO_data$FatTissue.percent, ylim=c(-30,150),
+     ylab="weight (pounds)", xlab="x")
+abline(h=mean(KO_data$FatTissue.percent),
+       col="forestgreen",lwd=3,lty=1)
+```
+
+More about R-squared - TSS (18/23)
+=========================================================
+
+```{r,echo=F,fig.width=5,fig.height=5,dpi=300,out.width="720px",height="720px"}
+diff_df<-KO_data$FatTissue.percent-mean(KO_data$FatTissue.percent)
+plot(KO_data$FatTissue.percent, ylim=c(0,100),
+     ylab="fat tissue (%)", xlab="x")
+abline(h=mean(KO_data$FatTissue.percent),
+       col="forestgreen",lwd=3,lty=1)
+segments(x0=c(1:nrow(KO_data)),y0=KO_data$FatTissue.percent,
+         x1=c(1:nrow(KO_data)),y1=mean(KO_data$FatTissue.percent),col="red",lwd=2)
+```
+***
+Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
+
+$$
+TSS=\text{Total Sum of Squares}=\sum_{i=1}^n(y_i-\overline y)^2
+$$
+
+
+More about  about R-squared (19/23)
+=========================================================
+
+Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
+
+```{r,echo=F}
+diff_df<-KO_data$FatTissue.percent-mean(KO_data$FatTissue.percent)
+plot(KO_data$FatTissue.percent, ylim=c(-30,150),
+     ylab="rediduals (fat tissue %)", xlab="body weight (gram)")
+abline(h=mean(KO_data$FatTissue.percent),
+       col="forestgreen",lwd=3,lty=1)
+
+segments(x0=c(1:nrow(KO_data)),y0=KO_data$FatTissue.percent,
+         x1=c(1:nrow(KO_data)),y1=mean(KO_data$FatTissue.percent),col="red",lwd=2)
+```
+
+- Total Sum of Squares (TSS)
+
+$$
+  \begin{aligned}
+  TSS  = \sum_{i=1}^{n}(y_i-\overline y)^2
+  \end{aligned}
+$$
+
+***
+
+Residuals from the model
+
+```{r,echo=F}
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,150),
+     ylab="rediduals (fat tissue %)",xlab="body weight (gram)")
+abline(h=0,col="blueviolet",lwd=3, lty=1)
+x<-KO_data$BW.gram
+resid<-lmResult$residuals
+for (i in 1:nrow(KO_data)){
+  lines(c(x[i],x[i]),c(0,resid[i]), col="red",lwd=2)
+}
+```
+- Sum of the square of the residuals (SSE)
+$$
+SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
+$$
+
+More about R-squared (20/23)
+=========================================================
+
+```{r,warning=F,echo=F,fig.width=6,fig.height=6,dpi=300,out.width="720px",height="720px"}
+
+library(ggplot2,quietly=T)
+e<-c(resid(lm(FatTissue.percent~1,data=KO_data)),
+     resid(lm(FatTissue.percent~BW.gram,data=KO_data)))
+fit4figure<-factor(c(rep("Fit2mean",nrow(KO_data)),
+                   rep("Fit2BW",nrow(KO_data))), levels=c("Fit2mean","Fit2BW"))
+ggplot(data.frame(e=e,fit=fit4figure),aes(y=e,x=fit,fill=fit)) + 
+  geom_dotplot(binaxis="y", stackdir="center",binwidth = 1) + xlab("Model fit") +
+  ylab("residuals (fat tissue %)")
+
+```
+
+More about R-squared - Calculating R-squared (21/23)
+=========================================================
+
+The fraction of variability in the independent variable (Y; or the *weight* in this example) that can be explained by the explanatory variable (X; or the *height* in this example).
+
+$$
+TSS=\text{Total Sum of Squares}=\sum_{i=1}^n(y_i-\overline y)^2
+\\
+SSE=\text{Sum of the Square of the residuals}=\sum_{i=1}^n(y_i-\hat{y})^2
+$$
+
+```{r,prompt=T}
+SSE<-sum(resid(lm(FatTissue.percent~BW.gram,data=KO_data))^2)
+TSS<-sum(resid(lm(FatTissue.percent~1,data=KO_data))^2)
+R_square<-1-(SSE/TSS)
+R_square
+summary(lmResult)$r.squared
+```
+
+
+Interpret output of lm() - F-statistics (22/23)
+=========================================================
+
+The R-squared shows the fraction of the total variability that is explained by the linear relationship with the explanatory variable. However, it does not provide a formal hypothesis test for this relationship. 
+
+The F-test results from linear models also provides a measure of significance for a variable not being relevant
+
+```{r,prompt=T,echo=T}
+summary(lmResult)$fstatistic
+```
+
+More about F-statistics - Calculating F-stat (23/23)
+=========================================================
+
+$$
+F=\frac{MSM}{MSE}=\frac{\text{mean of the explained variance}}{\text{mean of the unexplained variance}}=\frac{({\displaystyle\frac{SSM}1})}{({\displaystyle\frac{SSE}{n-2}})}
+$$
+
+```{r,prompt=T}
+
+n=nrow(KO_data)
+SSM <- sum((predict(lmResult) - mean(KO_data$FatTissue.percent))^2)
+MSE <-sum(lmResult$residuals^2)/(n-2)
+
+MSM <-SSM/1
+
+MSM/MSE
+
+summary(lmResult)$fstatistic
+```

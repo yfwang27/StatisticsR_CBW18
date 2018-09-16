@@ -690,9 +690,9 @@ Independent t-test (7/8)
 ========================================================
 We have ascertained that Ration1 and Ration2 have similar variances. We can therefore perform a standard t-test to assess the significance of differences between these groups.
 
-$$H_0:\mu_{Ration1}= \mu_{Ration2}
+$$H_0:\mu_{WT_{8w}}= \mu_{WT_{16w}}
 \\
-H_a:\mu_{Ration1}\neq \mu_{Ration2}$$
+H_a:\mu_{WT_{8w}}\neq \mu_{WT_{16w}}$$
 
 
 ```r
@@ -1026,3 +1026,577 @@ db/db-+/+  23.796276 19.4190332 28.17352 0.0000000
 db/db-db/+ 18.665083 13.9085869 23.42158 0.0000000
 ```
 
+Correlation (1/6)
+=========================================================
+
+A common task in statistical analysis is to investigate the linear relationship between pairs of numeric vectors.
+
+This can be done by identifying the correlation between numeric vectors using the **cor()** function in R.
+
+In this example we use **cor()** to identify the Pearson correlation between two variables.  The **method** argument may be set to make use of different correlation methods.
+
+- Perfectly posively correlated vectors will return 1
+- Perfectly negatively correlated vectors will return -1
+- Vectors showing no or little linear correlation will be close to 0.
+
+
+Correlation between vectors (2/6)
+=========================================================
+
+
+```r
+> x <- rnorm(100,10,2)
+> z <- rnorm(100,10,2)
+> y <- x
+> cor(x,y) #
+```
+
+```
+[1] 1
+```
+
+```r
+> cor(x,-y)
+```
+
+```
+[1] -1
+```
+
+```r
+> cor(x,z)
+```
+
+```
+[1] 0.2333653
+```
+***
+![plot of chunk unnamed-chunk-57](CBW2018_course-figure/unnamed-chunk-57-1.png)
+
+Correlation example (3/6)
+=========================================================
+
+Example of our mouse data. We would like to see whether there is a relationship between body weight and the percentage of fat tissue in the WT mice.
+
+
+```r
+> KO_data<-alldata[alldata$Genotype=="db/db",]
+> head(KO_data)
+```
+
+```
+         mouseID Sex Genotype Age ID BW.gram FatTissue.percent GLU.mg.dL
+16  F_db/db_16_1   F    db/db  16  1   57.09              63.1       876
+17 F_db/db_16_10   F    db/db  16 10   61.14              63.3       669
+18  F_db/db_16_2   F    db/db  16  2   49.07              69.2       830
+19  F_db/db_16_3   F    db/db  16  3   55.31              64.7       785
+20  F_db/db_16_4   F    db/db  16  4   56.39              63.2       852
+21  F_db/db_16_5   F    db/db  16  5   49.24              63.2       706
+```
+
+```r
+> cor(KO_data$BW.gram,KO_data$FatTissue.percent)
+```
+
+```
+[1] 0.8436125
+```
+***
+![plot of chunk unnamed-chunk-59](CBW2018_course-figure/unnamed-chunk-59-1.png)
+
+Correlation over a matrix (4/6)
+=========================================================
+left: 70%
+Often we wish to apply correlation analysis to all columns or rows in a matrix in a pair-wise manner. To do this in R, we can simply pass the **cor()** function a single argument of the numeric matrix of interest. The **cor()** function will then perform all pair-wise correlations between columns.
+
+- subset iris dataset
+
+```r
+> mouse4cor<-KO_data[,c(6:8)]; 
+```
+
+Correlation over a matrix (5/6)
+=========================================================
+
+```r
+> cor(mouse4cor)
+```
+
+```
+                    BW.gram FatTissue.percent GLU.mg.dL
+BW.gram           1.0000000         0.8436125 0.6511112
+FatTissue.percent 0.8436125         1.0000000 0.5751244
+GLU.mg.dL         0.6511112         0.5751244 1.0000000
+```
+![plot of chunk unnamed-chunk-62](CBW2018_course-figure/unnamed-chunk-62-1.png)
+
+Correlation (6/6)
+========================================================
+
+```r
+> pairs(mouse4cor)
+```
+
+<img src="CBW2018_course-figure/unnamed-chunk-63-1.png" title="plot of chunk unnamed-chunk-63" alt="plot of chunk unnamed-chunk-63" width="650px" />
+Linear regression (1/23)
+=========================================================
+
+We have seen how we can find the linear correlation between two sets of variables using **cor()** function.
+
+R also provides a comprehensive set of tools for regression analysis including the well used linear modeling function **lm()**
+
+- least square method
+
+*minimize the vertical distance between the fitted line and data points* 
+
+<img src="CBW2018_course-figure/unnamed-chunk-64-1.png" title="plot of chunk unnamed-chunk-64" alt="plot of chunk unnamed-chunk-64" width="650px" />
+
+
+Linear regression (2/23)
+=========================================================
+left: 70%
+We use KO mouse dataset as example and see whether we can use mouse body weight to predict the percentage of fat tissue.
+
+```r
+> KO_data<-alldata[alldata$Genotype=="db/db",]
+> head(KO_data)
+```
+
+```
+         mouseID Sex Genotype Age ID BW.gram FatTissue.percent GLU.mg.dL
+16  F_db/db_16_1   F    db/db  16  1   57.09              63.1       876
+17 F_db/db_16_10   F    db/db  16 10   61.14              63.3       669
+18  F_db/db_16_2   F    db/db  16  2   49.07              69.2       830
+19  F_db/db_16_3   F    db/db  16  3   55.31              64.7       785
+20  F_db/db_16_4   F    db/db  16  4   56.39              63.2       852
+21  F_db/db_16_5   F    db/db  16  5   49.24              63.2       706
+```
+***
+<img src="CBW2018_course-figure/unnamed-chunk-66-1.png" title="plot of chunk unnamed-chunk-66" alt="plot of chunk unnamed-chunk-66" width="820px" />
+
+
+Linear regression (3/23)
+=========================================================
+The **lm()** function fits a linear regression to your data and provides useful information on the generated fit.
+
+In the example below we fit a linear model using  **lm()** on the *KO_data* dataset with *FatTissue.percent* (Y) as the dependent variable and *BW.gram* (X) as the explanatory variable.
+
+```r
+> lmResult<-lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
+> lmResult
+```
+
+```
+
+Call:
+lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
+
+Coefficients:
+(Intercept)      BW.gram  
+    36.6140       0.5026  
+```
+
+
+Interpret output of lm() (4/23)
+=========================================================
+
+As we have seen, printing the model result provides the intercept and slope of line.
+To get some more information on the model we can use the **summary()** function
+
+```r
+> summary(lmResult)
+```
+
+```
+
+Call:
+lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.4038 -1.5671 -0.0821  1.1951  7.9231 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  36.6140     2.4861  14.727  < 2e-16 ***
+BW.gram       0.5026     0.0519   9.685 8.25e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.583 on 38 degrees of freedom
+Multiple R-squared:  0.7117,	Adjusted R-squared:  0.7041 
+F-statistic:  93.8 on 1 and 38 DF,  p-value: 8.247e-12
+```
+
+Interpret output of lm() - coefficients (5/23)
+=========================================================
+left: 70%
+
+```r
+> lmResult$coefficients
+```
+
+```
+(Intercept)     BW.gram 
+ 36.6140076   0.5026053 
+```
+From the **$coefficients** of object *lmResult*, we know the equation for the best fit is
+
+**$$Y = 36.6140076 + 0.5026053 *X$$**
+
+**$$f(x)  = b_0 + b_1x$$**
+
+$$b_0\text{: the value of f(x) when x =0}$$
+
+
+```r
+# the Intercept 36.6140076 is the expected percentage of fat tissue of a 0 body weight
+# not interesting to any biological questions
+```
+
+$$b_1\text{: the amount of f(x) will change when x changes 1 unit}$$
+
+
+```r
+# For every gram increased in the mice body weight, we expect 0.50 (%) increased in the Fat tissue
+```
+***
+<img src="CBW2018_course-figure/unnamed-chunk-72-1.png" title="plot of chunk unnamed-chunk-72" alt="plot of chunk unnamed-chunk-72" width="720px" />
+
+
+More about coefficients (6/23)
+=========================================================
+
+Predict the percentage of fat tissue with the body weight information.
+
+If we have 3 KO mice with weight = 40, 55 and 66 grams, how do we predict their percentage of fat tissue?
+
+
+Use the information from the *$coefficients*
+
+```r
+> new_mouse_bw<-c(40,55,66)
+> beta0<-lmResult$coefficients[1]
+> beta1<-lmResult$coefficients[2]
+> 
+> predicted_new_fat<-beta0+beta1*new_mouse_bw
+> predicted_new_fat
+```
+
+```
+[1] 56.71822 64.25730 69.78596
+```
+
+Or use the *predict()*
+
+```r
+new_mouse_bw_df <- data.frame(BW.gram=c(40,55,66))
+cleaver_predicted_fat<-predict(lmResult,new_mouse_bw_df)
+cleaver_predicted_fat
+```
+
+```
+       1        2        3 
+56.71822 64.25730 69.78596 
+```
+
+
+
+Interpret output of lm() - residuals (7/23)
+=========================================================
+
+The **residuals** are the difference between the predicted and actual values.
+To retrieve the residuals we can access the slot or use the **resid()** function.
+
+
+```r
+> summary(resid(lmResult))
+```
+
+```
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-4.40385 -1.56712 -0.08214  0.00000  1.19506  7.92315 
+```
+
+```r
+> summary(lmResult$residual)
+```
+
+```
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-4.40385 -1.56712 -0.08214  0.00000  1.19506  7.92315 
+```
+Ideally you would want your residuals to be normally distributed around 0.
+
+$$
+E[e_{i}]=0
+$$
+
+More about residuals (8/23)
+=========================================================
+
+Plot the residuals
+
+
+```r
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(0,120),
+     ylab="Fat tissue (%)",xlab="body weight (gram)")
+abline(lmResult,col="blueviolet",lwd=3, lty=1)
+```
+
+<img src="CBW2018_course-figure/unnamed-chunk-76-1.png" title="plot of chunk unnamed-chunk-76" alt="plot of chunk unnamed-chunk-76" width="1000" />
+
+More about residuals (9/23)
+=========================================================
+
+Residual is the vertical distance between the observed data and the regression line. It has the same unit as the dependent variable.
+
+<img src="CBW2018_course-figure/unnamed-chunk-77-1.png" title="plot of chunk unnamed-chunk-77" alt="plot of chunk unnamed-chunk-77" width="1020" />
+
+More about residuals (10/23)
+=========================================================
+
+SSE shows the residual variability
+
+It shows the variability that cannot be explained by the regression model
+
+<img src="CBW2018_course-figure/unnamed-chunk-78-1.png" title="plot of chunk unnamed-chunk-78" alt="plot of chunk unnamed-chunk-78" width="1020" />
+***
+$$
+Error_i = y_i - \hat{y_i}
+\\
+y_i\text{: the observed weight of ith kid}
+\\
+\hat{y_i}\text{: the predicted weight of ith kid}
+\\
+Error_i^2  = (y_i - \hat{y_i})^2
+\\
+\text{- sum of the square of the residuals (SSE)}
+\\
+SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
+$$
+
+
+
+More about residuals (11/23)
+=========================================================
+
+Plot the residuals against the independent variable (X), i.e. the height. It makes the residual accessment easiler by eyes.
+
+
+```r
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,30),
+     ylab="residuals (fat tissue %)",xlab="body weight (gram)")
+abline(h=0,col="blueviolet",lwd=3, lty=1)
+```
+
+<img src="CBW2018_course-figure/unnamed-chunk-79-1.png" title="plot of chunk unnamed-chunk-79" alt="plot of chunk unnamed-chunk-79" width="1000px" />
+
+More about residuals (12/23)
+=========================================================
+
+Plot the residuals against the independent variable (X), i.e. the height. 
+
+<img src="CBW2018_course-figure/unnamed-chunk-80-1.png" title="plot of chunk unnamed-chunk-80" alt="plot of chunk unnamed-chunk-80" width="1020" />
+
+More about residuals (13/23)
+=========================================================
+
+Plot the residuals against the independent variable (X)
+
+<img src="CBW2018_course-figure/unnamed-chunk-81-1.png" title="plot of chunk unnamed-chunk-81" alt="plot of chunk unnamed-chunk-81" width="720px" />
+
+***
+$$
+Error_i = y_i - \hat{y_i}
+\\
+
+Error_i^2  = (y_i - \hat{y_i})^2
+\\
+\text{- sum of the square of the residuals (SSE)}
+\\
+SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
+$$
+
+
+Interpret output of lm() - R-squared (14/23)
+=========================================================
+
+- The **R-squared** value represents the proportion of variability in the response variable that is explained by the explanatory variable.
+
+- A high **R-squared** here indicates that the line fits closely to the data.
+
+
+```r
+> summary(lmResult)$r.squared
+```
+
+```
+[1] 0.711682
+```
+
+
+More about R-squared (15/23)
+=========================================================
+
+- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+
+
+```r
+> KO_data$FatTissue.percent
+```
+
+```
+ [1] 63.1 63.3 69.2 64.7 63.2 63.2 71.1 62.7 67.0 63.7 57.7 54.8 56.8 53.5
+[15] 60.1 55.1 55.4 57.8 56.2 57.3 59.7 64.2 62.9 58.9 63.8 64.8 67.5 65.8
+[29] 64.5 64.4 56.1 54.3 56.9 58.1 53.4 60.9 58.4 54.7 54.0 55.4
+```
+
+More about R-squared (16/23)
+=========================================================
+
+- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+
+- mean might be a good choice
+
+
+```r
+> mean(KO_data$FatTissue.percent)
+```
+
+```
+[1] 60.365
+```
+
+- If we have a new child, we could assume that the kid's weight is around 38.384 pounds.
+
+More about R-squared (17/23)
+=========================================================
+
+- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+
+- mean might be a good choice
+
+<img src="CBW2018_course-figure/unnamed-chunk-85-1.png" title="plot of chunk unnamed-chunk-85" alt="plot of chunk unnamed-chunk-85" width="720px" />
+
+More about R-squared - TSS (18/23)
+=========================================================
+
+<img src="CBW2018_course-figure/unnamed-chunk-86-1.png" title="plot of chunk unnamed-chunk-86" alt="plot of chunk unnamed-chunk-86" width="720px" />
+***
+Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
+
+$$
+TSS=\text{Total Sum of Squares}=\sum_{i=1}^n(y_i-\overline y)^2
+$$
+
+
+More about  about R-squared (19/23)
+=========================================================
+
+Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
+
+![plot of chunk unnamed-chunk-87](CBW2018_course-figure/unnamed-chunk-87-1.png)
+
+- Total Sum of Squares (TSS)
+
+$$
+  \begin{aligned}
+  TSS  = \sum_{i=1}^{n}(y_i-\overline y)^2
+  \end{aligned}
+$$
+
+***
+
+Residuals from the model
+
+![plot of chunk unnamed-chunk-88](CBW2018_course-figure/unnamed-chunk-88-1.png)
+- Sum of the square of the residuals (SSE)
+$$
+SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
+$$
+
+More about R-squared (20/23)
+=========================================================
+
+<img src="CBW2018_course-figure/unnamed-chunk-89-1.png" title="plot of chunk unnamed-chunk-89" alt="plot of chunk unnamed-chunk-89" width="720px" />
+
+More about R-squared - Calculating R-squared (21/23)
+=========================================================
+
+The fraction of variability in the independent variable (Y; or the *weight* in this example) that can be explained by the explanatory variable (X; or the *height* in this example).
+
+$$
+TSS=\text{Total Sum of Squares}=\sum_{i=1}^n(y_i-\overline y)^2
+\\
+SSE=\text{Sum of the Square of the residuals}=\sum_{i=1}^n(y_i-\hat{y})^2
+$$
+
+
+```r
+> SSE<-sum(resid(lm(FatTissue.percent~BW.gram,data=KO_data))^2)
+> TSS<-sum(resid(lm(FatTissue.percent~1,data=KO_data))^2)
+> R_square<-1-(SSE/TSS)
+> R_square
+```
+
+```
+[1] 0.711682
+```
+
+```r
+> summary(lmResult)$r.squared
+```
+
+```
+[1] 0.711682
+```
+
+
+Interpret output of lm() - F-statistics (22/23)
+=========================================================
+
+The R-squared shows the fraction of the total variability that is explained by the linear relationship with the explanatory variable. However, it does not provide a formal hypothesis test for this relationship. 
+
+The F-test results from linear models also provides a measure of significance for a variable not being relevant
+
+
+```r
+> summary(lmResult)$fstatistic
+```
+
+```
+   value    numdf    dendf 
+93.79893  1.00000 38.00000 
+```
+
+More about F-statistics - Calculating F-stat (23/23)
+=========================================================
+
+$$
+F=\frac{MSM}{MSE}=\frac{\text{mean of the explained variance}}{\text{mean of the unexplained variance}}=\frac{({\displaystyle\frac{SSM}1})}{({\displaystyle\frac{SSE}{n-2}})}
+$$
+
+
+```r
+> n=nrow(KO_data)
+> SSM <- sum((predict(lmResult) - mean(KO_data$FatTissue.percent))^2)
+> MSE <-sum(lmResult$residuals^2)/(n-2)
+> 
+> MSM <-SSM/1
+> 
+> MSM/MSE
+```
+
+```
+[1] 93.79893
+```
+
+```r
+> summary(lmResult)$fstatistic
+```
+
+```
+   value    numdf    dendf 
+93.79893  1.00000 38.00000 
+```
