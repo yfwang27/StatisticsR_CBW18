@@ -672,7 +672,7 @@ Assume that
 
 (3) data of each group is normally distributed
 
-(4) homogeneneity of variances
+(4) homogeneity of variances
 
 ANOVA (2/5)
 ========================================================
@@ -765,7 +765,7 @@ Correlation over a matrix (4/6)
 left: 70%
 Often we wish to apply correlation analysis to all columns or rows in a matrix in a pair-wise manner. To do this in R, we can simply pass the **cor()** function a single argument of the numeric matrix of interest. The **cor()** function will then perform all pair-wise correlations between columns.
 
-- subset iris dataset
+- subset mouse dataset
 ```{r,prompt=T}
 mouse4cor<-KO_data[,c(6:8)]; 
 
@@ -776,10 +776,10 @@ Correlation over a matrix (5/6)
 ```{r,prompt=T}
 cor(mouse4cor)
 ```
-```{r,eval=T,echo=F,fig.width=4,fig.height=3.5,dpi=300}
+```{r,eval=T,echo=F,fig.width=4,fig.height=2.5,dpi=300}
 image(cor(mouse4cor),axes=F)
 mtext(colnames(mouse4cor),side=2,at=seq(0,1,length.out=3),las=1,cex=0.6)
-mtext(colnames(mouse4cor),side=1,at=seq(0,1,length.out=3),las=2,cex=0.6)
+mtext(colnames(mouse4cor),side=3,at=seq(0,1,length.out=3),las=2,cex=0.6)
 
 ```
 
@@ -928,7 +928,7 @@ More about residuals (8/23)
 Plot the residuals
 
 ```{r,echo=T,fig.width=9,fig.height=7,dpi=300,out.width="1000",height="750"}
-plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(0,120),
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(50,75),
      ylab="Fat tissue (%)",xlab="body weight (gram)")
 abline(lmResult,col="blueviolet",lwd=3, lty=1)
 
@@ -940,7 +940,7 @@ More about residuals (9/23)
 Residual is the vertical distance between the observed data and the regression line. It has the same unit as the dependent variable.
 
 ```{r,echo=F,fig.width=9,fig.height=7,dpi=300,out.width="1020",height="800"}
-plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(0,120),
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(50,75),
      ylab="Fat tissue (%)",xlab="body weight (gram)")
 abline(lmResult,col="blueviolet",lwd=3, lty=1)
 y<-KO_data$FatTissue.percent;x<-KO_data$BW.gram
@@ -960,7 +960,7 @@ SSE shows the residual variability
 It shows the variability that cannot be explained by the regression model
 
 ```{r,echo=F,fig.width=9,fig.height=7,dpi=300,out.width="1020",height="800"}
-plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(-30,150),
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(50,75),
      ylab="Fat tissue (%)",xlab="body weight (gram)")
 abline(lmResult,col="blueviolet",lwd=3, lty=1)
 y<-KO_data$FatTissue.percent;x<-KO_data$BW.gram
@@ -991,10 +991,10 @@ $$
 More about residuals (11/23)
 =========================================================
 
-Plot the residuals against the independent variable (X), i.e. the height. It makes the residual accessment easiler by eyes.
+Plot the residuals against the independent variable (X), i.e. the body weight It makes the residual accessment easiler by eyes.
 
 ```{r,echo=T,fig.width=9,fig.height=7,dpi=300,out.width="1000px",height="750px"}
-plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,30),
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-10,10),
      ylab="residuals (fat tissue %)",xlab="body weight (gram)")
 abline(h=0,col="blueviolet",lwd=3, lty=1)
 
@@ -1003,10 +1003,10 @@ abline(h=0,col="blueviolet",lwd=3, lty=1)
 More about residuals (12/23)
 =========================================================
 
-Plot the residuals against the independent variable (X), i.e. the height. 
+Plot the residuals against the independent variable (X), i.e. the body weight. 
 
 ```{r,echo=F,fig.width=9,fig.height=7,dpi=300,out.width="1020",height="800px"}
-plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,150),
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-10,10),
      ylab="residuals (fat tissue %)",xlab="body weight (gram)")
 abline(h=0,col="blueviolet",lwd=3, lty=1)
 x<-KO_data$BW.gram
@@ -1022,7 +1022,7 @@ More about residuals (13/23)
 Plot the residuals against the independent variable (X)
 
 ```{r,echo=F,fig.width=5,fig.height=5,dpi=300,out.width="720px",height="720px"}
-plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,150),
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-10,10),
      ylab="residuals (fat tissue %)",xlab="body weight (gram)")
 abline(h=0,col="blueviolet",lwd=3, lty=1)
 x<-KO_data$BW.gram
@@ -1061,7 +1061,7 @@ summary(lmResult)$r.squared
 More about R-squared (15/23)
 =========================================================
 
-- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+- Question: How would you describe (or summarize) the percentage of fat tissue when the **body weight information is absence**? Which information you would use to predict a new mouse's percentage of fat tissue?
 
 ```{r,prompt=T,echo=T}
 KO_data$FatTissue.percent
@@ -1070,7 +1070,7 @@ KO_data$FatTissue.percent
 More about R-squared (16/23)
 =========================================================
 
-- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+- Question: How would you describe (or summarize) the percentage of fat tissue when the **body weight information is absence**? Which information you would use to predict a new mouse's percentage of fat tissue?
 
 - mean might be a good choice
 

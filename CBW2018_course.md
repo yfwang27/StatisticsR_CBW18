@@ -955,7 +955,7 @@ Assume that
 
 (3) data of each group is normally distributed
 
-(4) homogeneneity of variances
+(4) homogeneity of variances
 
 ANOVA (2/5)
 ========================================================
@@ -1068,7 +1068,7 @@ Correlation between vectors (2/6)
 ```
 
 ```
-[1] 0.2333653
+[1] 0.08619784
 ```
 ***
 ![plot of chunk unnamed-chunk-57](CBW2018_course-figure/unnamed-chunk-57-1.png)
@@ -1109,7 +1109,7 @@ Correlation over a matrix (4/6)
 left: 70%
 Often we wish to apply correlation analysis to all columns or rows in a matrix in a pair-wise manner. To do this in R, we can simply pass the **cor()** function a single argument of the numeric matrix of interest. The **cor()** function will then perform all pair-wise correlations between columns.
 
-- subset iris dataset
+- subset mouse dataset
 
 ```r
 > mouse4cor<-KO_data[,c(6:8)]; 
@@ -1339,7 +1339,7 @@ Plot the residuals
 
 
 ```r
-plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(0,120),
+plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(50,75),
      ylab="Fat tissue (%)",xlab="body weight (gram)")
 abline(lmResult,col="blueviolet",lwd=3, lty=1)
 ```
@@ -1381,11 +1381,11 @@ $$
 More about residuals (11/23)
 =========================================================
 
-Plot the residuals against the independent variable (X), i.e. the height. It makes the residual accessment easiler by eyes.
+Plot the residuals against the independent variable (X), i.e. the body weight It makes the residual accessment easiler by eyes.
 
 
 ```r
-plot(KO_data$BW.gram,lmResult$residual,ylim=c(-30,30),
+plot(KO_data$BW.gram,lmResult$residual,ylim=c(-10,10),
      ylab="residuals (fat tissue %)",xlab="body weight (gram)")
 abline(h=0,col="blueviolet",lwd=3, lty=1)
 ```
@@ -1395,7 +1395,7 @@ abline(h=0,col="blueviolet",lwd=3, lty=1)
 More about residuals (12/23)
 =========================================================
 
-Plot the residuals against the independent variable (X), i.e. the height. 
+Plot the residuals against the independent variable (X), i.e. the body weight. 
 
 <img src="CBW2018_course-figure/unnamed-chunk-80-1.png" title="plot of chunk unnamed-chunk-80" alt="plot of chunk unnamed-chunk-80" width="1020" />
 
@@ -1439,7 +1439,7 @@ Interpret output of lm() - R-squared (14/23)
 More about R-squared (15/23)
 =========================================================
 
-- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+- Question: How would you describe (or summarize) the percentage of fat tissue when the **body weight information is absence**? Which information you would use to predict a new mouse's percentage of fat tissue?
 
 
 ```r
@@ -1455,7 +1455,7 @@ More about R-squared (15/23)
 More about R-squared (16/23)
 =========================================================
 
-- Question: How would you describe (or summarize) kid's weight when the **height information is absence**? Which information you would use to predict a new child's weight?
+- Question: How would you describe (or summarize) the percentage of fat tissue when the **body weight information is absence**? Which information you would use to predict a new mouse's percentage of fat tissue?
 
 - mean might be a good choice
 
