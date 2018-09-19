@@ -1,8 +1,10 @@
 ---
 title: "Exercise for Session1 part2: data summary"
-author: "MRC Clinical Sciences Centre (http://mrccsc.github.io/)"
-date: "14/Nov/2016"
+author: "MRC London Institute of Medical Sciences (http://bioinformatics.lms.mrc.ac.uk)"
+date: "25/Sep/2018"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 These exercises cover the sections of Statistics in R [Session1: data summary]("../Session1_describe_the_data.html").

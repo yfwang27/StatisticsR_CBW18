@@ -1,7 +1,7 @@
 ---
 title: "Exercise for Session2: Hypothesis Testing and ANOVA"
-author: "MRC Clinical Sciences Centre (http://mrccsc.github.io/)"
-date: "12/July/2016"
+author: "MRC London Institute of Medical Sciences (http://bioinformatics.lms.mrc.ac.uk)"
+date: "25/Sep/2018"
 output: html_document
 ---
 
