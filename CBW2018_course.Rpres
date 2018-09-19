@@ -25,10 +25,10 @@ Materials.
 id: materials
 
 All prerequisites, links to material and slides for this course can be found on github.
-* [StatisticsInR](http://mrccsc.github.io/StatisticsInR/)
+* [StatisticsInR](https://yfwang27.github.io/StatisticsR_CBW18/)
 
 Or can be downloaded as a zip archive from here.
-* [Download zip](https://github.com/mrccsc/StatisticsInR/zipball/master)
+* [Download zip](https://yfwang27.github.io/StatisticsR_CBW18/zipball/master)
 
 Materials. - Presentations, source code and practicals.
 ========================================================
@@ -75,7 +75,7 @@ We don't need a pretty excel file for the csv format
 Load data
 ========================================================
 
-```{r,prompt=T}
+```{r,prompt=F}
 alldata<-read.csv(file="data/mouse_BW_Fat_Glu_info.csv")
 ```
 
@@ -108,28 +108,28 @@ eg. gender, hair colour, RNA-seq read count...
 Recap some basic R functions (1/7)
 ========================================================
 - **str()**, **head()**, **dim()**, **colnames()** and **summary()** functions
-- more details please see [Reproducible R course](http://mrccsc.github.io/Reproducible-R/)
+- more details please see [Reproducible R course](https://lmsbioinformatics.github.io/LMS_Reproducible-R/)
 
--- [Data types in R](http://mrccsc.github.io/Reproducible-R/r_course/presentations/slides/introToR_Session1.html#/datatypes)
+-- [Data types in R]
 
 
 Recap some basic R functions (2/7)
 ========================================================
 
 **head()**: See the first 6 lines of an R object
-```{r,prompt=T}
+```{r,prompt=F}
 head(alldata)
 ```
 
 Recap some basic R functions (3/7)
 ========================================================
 see the how many rows and columns in "alldata" object
-```{r,prompt=T}
+```{r,prompt=F}
 dim(alldata)
 ```
 
 see column names of "alldata"
-```{r,prompt=T}
+```{r,prompt=F}
 colnames(alldata)
 ```
 
@@ -139,21 +139,21 @@ Recap some basic R functions (4/7)
 **str()**: Compactly display the internal structure of an R object
 
 Make sure the data format is correct for each column.
-```{r,prompt=T}
+```{r,prompt=F}
 str(alldata)
 ```
 
 Recap some basic R functions (5/7)
 ========================================================
 
-```{r,prompt=T}
+```{r,prompt=F}
 summary(alldata)
 ```
 
 Recap some basic R functions (6/7)
 ========================================================
 
-```{r,prompt=T}
+```{r,prompt=F}
 alldata$Age<-as.factor(alldata$Age)
 summary(alldata)
 ```
@@ -168,14 +168,14 @@ ftable(alldata[,c("Age","Genotype")])
 
 Spread of data - working with plots (boxplot)
 ========================================================
-```{r,prompt=T}
+```{r,prompt=F}
 library(ggplot2)
 ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_boxplot()
 ```
 
 Shape of data - working with plots 2 (Violin plot)
 ========================================================
-```{r,prompt=T}
+```{r,prompt=F}
 library(ggplot2)
 ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_violin(position=position_dodge(width = 0.5)) +geom_boxplot(width=.1, outlier.colour=NA,position=position_dodge(width = 0.5))
 
@@ -186,11 +186,11 @@ Spread of data - use body weight from WT mice (1/4)
 ========================================================
 
 - working with plots
-- more details please see [Reproducible R course](http://mrccsc.github.io/Reproducible-R/)
+- more details please see [Reproducible R course](https://lmsbioinformatics.github.io/LMS_Reproducible-R/)
 
---[Plotting in R](http://mrccsc.github.io/Reproducible-R/r_course/presentations/slides/introToR_Session1.html#/plotting)
+--[Plotting in R](https://lmsbioinformatics.github.io/LMS_Reproducible-R/)
 
-```{r,prompt=T}
+```{r,prompt=F}
 WT_data<-alldata[alldata$Genotype=="+/+",]
 WT_data$BW.gram
 ```
@@ -199,7 +199,7 @@ Spread of data - useful functions (2/4)
 ========================================================
 
 **min()**, **max()**, **median()**, **range()** and **quantile()** functions
-```{r,prompt=T}
+```{r,prompt=F}
 min.BW.gram<-min(WT_data$BW.gram)
 max.BW.gram<-max(WT_data$BW.gram)
 median.BW.gram<-median(WT_data$BW.gram)
@@ -220,24 +220,25 @@ boxplot(WT_data$BW.gram,ylab="Body Weight (gram)")
 abline(h=mean(WT_data$BW.gram),col="forestgreen",lwd=3)
 ```
 ***
-```{r,prompt=T}
+```{r,prompt=F}
 c(min.BW.gram, max.BW.gram)
 c(median.BW.gram, mean.BW.gram)
 quantile(WT_data$BW.gram)[c(2,4)]
+
 ```
 
 Spread of data -  work with plots (4/4)
 ========================================================
 **summary()**
-```{r,prompt=T}
+```{r,prompt=F}
 summary(WT_data$BW.gram)
 ```
 **range()**: show the minimum and maximum
-```{r,prompt=T}
+```{r,prompt=F}
 range(WT_data$BW.gram)
 ```
 **IQR()**: show the interquartile range, i.e. 3rd quartile - 1st quartile
-```{r,prompt=T}
+```{r,prompt=F}
 IQR(WT_data$BW.gram)
 ```
 
@@ -248,7 +249,7 @@ Spread of data - more about boxplot (optional 1/3)
 
 Scatter plot: plot the WT mice's Body Weight against index
 
-```{r,prompt=T,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
+```{r,prompt=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
 plot(WT_data$BW.gram,ylab="Body Weight (gram)")
 ```
 
@@ -256,7 +257,7 @@ Spread of data - work with plots (optional 2/3)
 ========================================================
 sort the data from min to max
 
-```{r,prompt=T,echo=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
+```{r,prompt=F,echo=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
 plot(sort(WT_data$BW.gram),ylab="Body Weight (gram)")
 ```
 ***
@@ -299,14 +300,14 @@ par(mfrow=c(1,1))
 Data shape - histogram (1/4)
 ========================================================
 
-```{r,prompt=T,fig.width=4.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
+```{r,prompt=F,fig.width=4.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
 hist(WT_data$BW.gram,breaks=10)
 ```
 
 Data shape - histogram (2/4)
 ========================================================
 
-```{r,prompt=T,fig.width=4.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
+```{r,prompt=F,fig.width=4.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
 hist(WT_data$BW.gram,breaks=10,freq = F)
 lines(density(WT_data$BW.gram),col="red")
 
@@ -341,7 +342,15 @@ par(mfrow=c(1,1))
 ```
 ***
 
+```{r,prompt=F, echo=F}
+library(ggplot2)
+ggplot(WT_data, aes(x=Genotype, y=BW.gram)) + 
+  geom_violin(position=position_dodge(width = 0.5)) +
+  ylim(range(WT_data$BW.gram))+xlab("")+
+  geom_boxplot(width=.1, outlier.colour=NA,position=position_dodge(width = 0.5)) +
+  theme_bw()+ coord_flip()
 
+```
 Spread of data - Variance and Standard deviation (1/3)
 ========================================================
 
@@ -355,7 +364,7 @@ $$
   \\ \\
   \end{aligned}
 $$
-```{r,prompt=T}
+```{r,prompt=F}
 var.BW.gram<-sum((WT_data$BW.gram-mean.BW.gram)^2)/(nrow(WT_data)-1)
 sd.BW.gram<-sqrt(var.BW.gram)
 c(var.BW.gram, sd.BW.gram)
@@ -363,7 +372,7 @@ c(var.BW.gram, sd.BW.gram)
 
 Spread of data - var() and sd() function (2/3)
 ========================================================
-```{r,prompt=T}
+```{r,prompt=F}
 var(WT_data$BW.gram)
 sd(WT_data$BW.gram)
 ```
@@ -638,7 +647,7 @@ fisher.test()
 ========================================================
 create a contigency table
 
-```{r,prompt=T}
+```{r,prompt=F}
 cmatrix<-matrix(c(5,40,295,19960),byrow=T,ncol=2,dimnames=list(c("In.B","Not.In.B"),c("In.A","Not.In.A")))
 cmatrix
 
@@ -721,7 +730,7 @@ In this example we use **cor()** to identify the Pearson correlation between two
 Correlation between vectors (2/6)
 =========================================================
 
-```{r,prompt=T}
+```{r,prompt=F}
 x <- rnorm(100,10,2)
 z <- rnorm(100,10,2)
 y <- x
@@ -730,7 +739,7 @@ cor(x,-y)
 cor(x,z)
 ```
 ***
-```{r,echo=F,prompt=T}
+```{r,echo=F,prompt=F}
 par(mfrow=c(3,1))
 plot(x,y) #
 plot(x,-y)
@@ -744,14 +753,14 @@ Correlation example (3/6)
 
 Example of our mouse data. We would like to see whether there is a relationship between body weight and the percentage of fat tissue in the WT mice.
 
-```{r,prompt=T}
+```{r,prompt=F}
 KO_data<-alldata[alldata$Genotype=="db/db",]
 head(KO_data)
 cor(KO_data$BW.gram,KO_data$FatTissue.percent)
 
 ```
 ***
-```{r,echo=F,prompt=T,fig.width=6,fig.height=5.5,dpi=300}
+```{r,echo=F,prompt=F,fig.width=6,fig.height=5.5,dpi=300}
 library("ggplot2")
 p <- ggplot(KO_data, aes(BW.gram, FatTissue.percent))
 p + geom_point()+
@@ -766,14 +775,14 @@ left: 70%
 Often we wish to apply correlation analysis to all columns or rows in a matrix in a pair-wise manner. To do this in R, we can simply pass the **cor()** function a single argument of the numeric matrix of interest. The **cor()** function will then perform all pair-wise correlations between columns.
 
 - subset mouse dataset
-```{r,prompt=T}
+```{r,prompt=F}
 mouse4cor<-KO_data[,c(6:8)]; 
 
 ```
 
 Correlation over a matrix (5/6)
 =========================================================
-```{r,prompt=T}
+```{r,prompt=F}
 cor(mouse4cor)
 ```
 ```{r,eval=T,echo=F,fig.width=4,fig.height=2.5,dpi=300}
@@ -785,7 +794,7 @@ mtext(colnames(mouse4cor),side=3,at=seq(0,1,length.out=3),las=2,cex=0.6)
 
 Correlation (6/6)
 ========================================================
-```{r,prompt=T,fig.width=5,fig.height=5,dpi=300,out.width="650px",height="650px"}
+```{r,prompt=F,fig.width=5,fig.height=5,dpi=300,out.width="650px",height="650px"}
 pairs(mouse4cor)
 ```
 Linear regression (1/23)
@@ -799,7 +808,7 @@ R also provides a comprehensive set of tools for regression analysis including t
 
 *minimize the vertical distance between the fitted line and data points* 
 
-```{r,echo=F,prompt=T,fig.width=3,fig.height=3,dpi=300,out.width="650px",height="650px"}
+```{r,echo=F,prompt=F,fig.width=3,fig.height=3,dpi=300,out.width="650px",height="650px"}
 library("ggplot2")
 
 pwh <-  ggplot(KO_data, aes(FatTissue.percent, BW.gram))
@@ -813,13 +822,13 @@ Linear regression (2/23)
 =========================================================
 left: 70%
 We use KO mouse dataset as example and see whether we can use mouse body weight to predict the percentage of fat tissue.
-```{r,prompt=T}
+```{r,prompt=F}
 KO_data<-alldata[alldata$Genotype=="db/db",]
 head(KO_data)
 
 ```
 ***
-```{r,echo=F,prompt=T,fig.width=4,fig.height=4,dpi=300,out.width="820px",height="820px"}
+```{r,echo=F,prompt=F,fig.width=4,fig.height=4,dpi=300,out.width="820px",height="820px"}
 pwh <-  ggplot(KO_data, aes(BW.gram, FatTissue.percent))
 pwh + geom_point() + labs(x = "Body weight (gram)",y="Fat Tissue (%)")
 ```
@@ -830,7 +839,7 @@ Linear regression (3/23)
 The **lm()** function fits a linear regression to your data and provides useful information on the generated fit.
 
 In the example below we fit a linear model using  **lm()** on the *KO_data* dataset with *FatTissue.percent* (Y) as the dependent variable and *BW.gram* (X) as the explanatory variable.
-```{r,prompt=T}
+```{r,prompt=F}
 lmResult<-lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
 lmResult
 ```
@@ -841,14 +850,14 @@ Interpret output of lm() (4/23)
 
 As we have seen, printing the model result provides the intercept and slope of line.
 To get some more information on the model we can use the **summary()** function
-```{r,prompt=T}
+```{r,prompt=F}
 summary(lmResult)
 ```
 
 Interpret output of lm() - coefficients (5/23)
 =========================================================
 left: 70%
-```{r,prompt=T}
+```{r,prompt=F}
 lmResult$coefficients
 ```
 From the **$coefficients** of object *lmResult*, we know the equation for the best fit is
@@ -871,7 +880,7 @@ $$b_1\text{: the amount of f(x) will change when x changes 1 unit}$$
 
 ```
 ***
-```{r,echo=F,prompt=T,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
+```{r,echo=F,prompt=F,fig.width=3.5,fig.height=3.5,dpi=300,out.width="720px",height="720px"}
 pwh <-  ggplot(KO_data, aes(BW.gram, FatTissue.percent))
 pwh + geom_point() + stat_smooth(method = "lm",se=F) +
   labs(x = "Body weight (gram)",y="Fat Tissue (%)")
@@ -887,7 +896,7 @@ If we have 3 KO mice with weight = 40, 55 and 66 grams, how do we predict their 
 
 
 Use the information from the *$coefficients*
-```{r,prompt=T}
+```{r,prompt=F}
 new_mouse_bw<-c(40,55,66)
 beta0<-lmResult$coefficients[1]
 beta1<-lmResult$coefficients[2]
@@ -912,7 +921,7 @@ Interpret output of lm() - residuals (7/23)
 The **residuals** are the difference between the predicted and actual values.
 To retrieve the residuals we can access the slot or use the **resid()** function.
 
-```{r,prompt=T,echo=T}
+```{r,prompt=F,echo=T}
 summary(resid(lmResult))
 summary(lmResult$residual)
 ```
@@ -1053,7 +1062,7 @@ Interpret output of lm() - R-squared (14/23)
 
 - A high **R-squared** here indicates that the line fits closely to the data.
 
-```{r,prompt=T,echo=T}
+```{r,prompt=F,echo=T}
 summary(lmResult)$r.squared
 ```
 
@@ -1063,7 +1072,7 @@ More about R-squared (15/23)
 
 - Question: How would you describe (or summarize) the percentage of fat tissue when the **body weight information is absence**? Which information you would use to predict a new mouse's percentage of fat tissue?
 
-```{r,prompt=T,echo=T}
+```{r,prompt=F,echo=T}
 KO_data$FatTissue.percent
 ```
 
@@ -1074,7 +1083,7 @@ More about R-squared (16/23)
 
 - mean might be a good choice
 
-```{r,prompt=T,echo=T}
+```{r,prompt=F,echo=T}
 mean(KO_data$FatTissue.percent)
 ```
 
@@ -1185,7 +1194,7 @@ TSS=\text{Total Sum of Squares}=\sum_{i=1}^n(y_i-\overline y)^2
 SSE=\text{Sum of the Square of the residuals}=\sum_{i=1}^n(y_i-\hat{y})^2
 $$
 
-```{r,prompt=T}
+```{r,prompt=F}
 SSE<-sum(resid(lm(FatTissue.percent~BW.gram,data=KO_data))^2)
 TSS<-sum(resid(lm(FatTissue.percent~1,data=KO_data))^2)
 R_square<-1-(SSE/TSS)
@@ -1201,7 +1210,7 @@ The R-squared shows the fraction of the total variability that is explained by t
 
 The F-test results from linear models also provides a measure of significance for a variable not being relevant
 
-```{r,prompt=T,echo=T}
+```{r,prompt=F,echo=T}
 summary(lmResult)$fstatistic
 ```
 
@@ -1212,7 +1221,7 @@ $$
 F=\frac{MSM}{MSE}=\frac{\text{mean of the explained variance}}{\text{mean of the unexplained variance}}=\frac{({\displaystyle\frac{SSM}1})}{({\displaystyle\frac{SSE}{n-2}})}
 $$
 
-```{r,prompt=T}
+```{r,prompt=F}
 
 n=nrow(KO_data)
 SSM <- sum((predict(lmResult) - mean(KO_data$FatTissue.percent))^2)

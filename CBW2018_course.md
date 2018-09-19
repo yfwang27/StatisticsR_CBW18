@@ -25,10 +25,10 @@ Materials.
 id: materials
 
 All prerequisites, links to material and slides for this course can be found on github.
-* [StatisticsInR](http://mrccsc.github.io/StatisticsInR/)
+* [StatisticsInR](https://yfwang27.github.io/StatisticsR_CBW18/)
 
 Or can be downloaded as a zip archive from here.
-* [Download zip](https://github.com/mrccsc/StatisticsInR/zipball/master)
+* [Download zip](https://yfwang27.github.io/StatisticsR_CBW18/zipball/master)
 
 Materials. - Presentations, source code and practicals.
 ========================================================
@@ -78,7 +78,7 @@ Load data
 
 
 ```r
-> alldata<-read.csv(file="data/mouse_BW_Fat_Glu_info.csv")
+alldata<-read.csv(file="data/mouse_BW_Fat_Glu_info.csv")
 ```
 
 Data summary
@@ -110,9 +110,9 @@ eg. gender, hair colour, RNA-seq read count...
 Recap some basic R functions (1/7)
 ========================================================
 - **str()**, **head()**, **dim()**, **colnames()** and **summary()** functions
-- more details please see [Reproducible R course](http://mrccsc.github.io/Reproducible-R/)
+- more details please see [Reproducible R course](https://lmsbioinformatics.github.io/LMS_Reproducible-R/)
 
--- [Data types in R](http://mrccsc.github.io/Reproducible-R/r_course/presentations/slides/introToR_Session1.html#/datatypes)
+-- [Data types in R]
 
 
 Recap some basic R functions (2/7)
@@ -121,7 +121,7 @@ Recap some basic R functions (2/7)
 **head()**: See the first 6 lines of an R object
 
 ```r
-> head(alldata)
+head(alldata)
 ```
 
 ```
@@ -139,7 +139,7 @@ Recap some basic R functions (3/7)
 see the how many rows and columns in "alldata" object
 
 ```r
-> dim(alldata)
+dim(alldata)
 ```
 
 ```
@@ -149,7 +149,7 @@ see the how many rows and columns in "alldata" object
 see column names of "alldata"
 
 ```r
-> colnames(alldata)
+colnames(alldata)
 ```
 
 ```
@@ -166,7 +166,7 @@ Recap some basic R functions (4/7)
 Make sure the data format is correct for each column.
 
 ```r
-> str(alldata)
+str(alldata)
 ```
 
 ```
@@ -186,7 +186,7 @@ Recap some basic R functions (5/7)
 
 
 ```r
-> summary(alldata)
+summary(alldata)
 ```
 
 ```
@@ -213,8 +213,8 @@ Recap some basic R functions (6/7)
 
 
 ```r
-> alldata$Age<-as.factor(alldata$Age)
-> summary(alldata)
+alldata$Age<-as.factor(alldata$Age)
+summary(alldata)
 ```
 
 ```
@@ -256,8 +256,8 @@ Spread of data - working with plots (boxplot)
 ========================================================
 
 ```r
-> library(ggplot2)
-> ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_boxplot()
+library(ggplot2)
+ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_boxplot()
 ```
 
 ![plot of chunk unnamed-chunk-10](CBW2018_course-figure/unnamed-chunk-10-1.png)
@@ -266,8 +266,8 @@ Shape of data - working with plots 2 (Violin plot)
 ========================================================
 
 ```r
-> library(ggplot2)
-> ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_violin(position=position_dodge(width = 0.5)) +geom_boxplot(width=.1, outlier.colour=NA,position=position_dodge(width = 0.5))
+library(ggplot2)
+ggplot(alldata, aes(x=Genotype, y=BW.gram, fill=Age)) + geom_violin(position=position_dodge(width = 0.5)) +geom_boxplot(width=.1, outlier.colour=NA,position=position_dodge(width = 0.5))
 ```
 
 ![plot of chunk unnamed-chunk-11](CBW2018_course-figure/unnamed-chunk-11-1.png)
@@ -277,14 +277,14 @@ Spread of data - use body weight from WT mice (1/4)
 ========================================================
 
 - working with plots
-- more details please see [Reproducible R course](http://mrccsc.github.io/Reproducible-R/)
+- more details please see [Reproducible R course](https://lmsbioinformatics.github.io/LMS_Reproducible-R/)
 
---[Plotting in R](http://mrccsc.github.io/Reproducible-R/r_course/presentations/slides/introToR_Session1.html#/plotting)
+--[Plotting in R](https://lmsbioinformatics.github.io/LMS_Reproducible-R/)
 
 
 ```r
-> WT_data<-alldata[alldata$Genotype=="+/+",]
-> WT_data$BW.gram
+WT_data<-alldata[alldata$Genotype=="+/+",]
+WT_data$BW.gram
 ```
 
 ```
@@ -298,11 +298,11 @@ Spread of data - useful functions (2/4)
 **min()**, **max()**, **median()**, **range()** and **quantile()** functions
 
 ```r
-> min.BW.gram<-min(WT_data$BW.gram)
-> max.BW.gram<-max(WT_data$BW.gram)
-> median.BW.gram<-median(WT_data$BW.gram)
-> mean.BW.gram<-mean(WT_data$BW.gram)
-> c(min.BW.gram, max.BW.gram, median.BW.gram, mean.BW.gram)
+min.BW.gram<-min(WT_data$BW.gram)
+max.BW.gram<-max(WT_data$BW.gram)
+median.BW.gram<-median(WT_data$BW.gram)
+mean.BW.gram<-mean(WT_data$BW.gram)
+c(min.BW.gram, max.BW.gram, median.BW.gram, mean.BW.gram)
 ```
 
 ```
@@ -310,7 +310,7 @@ Spread of data - useful functions (2/4)
 ```
 
 ```r
-> range(WT_data$BW.gram)
+range(WT_data$BW.gram)
 ```
 
 ```
@@ -318,7 +318,7 @@ Spread of data - useful functions (2/4)
 ```
 
 ```r
-> quantile(WT_data$BW.gram)
+quantile(WT_data$BW.gram)
 ```
 
 ```
@@ -336,7 +336,7 @@ Boxplot
 ***
 
 ```r
-> c(min.BW.gram, max.BW.gram)
+c(min.BW.gram, max.BW.gram)
 ```
 
 ```
@@ -344,7 +344,7 @@ Boxplot
 ```
 
 ```r
-> c(median.BW.gram, mean.BW.gram)
+c(median.BW.gram, mean.BW.gram)
 ```
 
 ```
@@ -352,7 +352,7 @@ Boxplot
 ```
 
 ```r
-> quantile(WT_data$BW.gram)[c(2,4)]
+quantile(WT_data$BW.gram)[c(2,4)]
 ```
 
 ```
@@ -365,7 +365,7 @@ Spread of data -  work with plots (4/4)
 **summary()**
 
 ```r
-> summary(WT_data$BW.gram)
+summary(WT_data$BW.gram)
 ```
 
 ```
@@ -375,7 +375,7 @@ Spread of data -  work with plots (4/4)
 **range()**: show the minimum and maximum
 
 ```r
-> range(WT_data$BW.gram)
+range(WT_data$BW.gram)
 ```
 
 ```
@@ -384,7 +384,7 @@ Spread of data -  work with plots (4/4)
 **IQR()**: show the interquartile range, i.e. 3rd quartile - 1st quartile
 
 ```r
-> IQR(WT_data$BW.gram)
+IQR(WT_data$BW.gram)
 ```
 
 ```
@@ -400,7 +400,7 @@ Scatter plot: plot the WT mice's Body Weight against index
 
 
 ```r
-> plot(WT_data$BW.gram,ylab="Body Weight (gram)")
+plot(WT_data$BW.gram,ylab="Body Weight (gram)")
 ```
 
 <img src="CBW2018_course-figure/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" width="720px" />
@@ -427,7 +427,7 @@ Data shape - histogram (1/4)
 
 
 ```r
-> hist(WT_data$BW.gram,breaks=10)
+hist(WT_data$BW.gram,breaks=10)
 ```
 
 <img src="CBW2018_course-figure/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" width="720px" />
@@ -437,8 +437,8 @@ Data shape - histogram (2/4)
 
 
 ```r
-> hist(WT_data$BW.gram,breaks=10,freq = F)
-> lines(density(WT_data$BW.gram),col="red")
+hist(WT_data$BW.gram,breaks=10,freq = F)
+lines(density(WT_data$BW.gram),col="red")
 ```
 
 <img src="CBW2018_course-figure/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" width="720px" />
@@ -456,7 +456,7 @@ Left: 40%
 ![plot of chunk unnamed-chunk-26](CBW2018_course-figure/unnamed-chunk-26-1.png)
 ***
 
-
+![plot of chunk unnamed-chunk-27](CBW2018_course-figure/unnamed-chunk-27-1.png)
 Spread of data - Variance and Standard deviation (1/3)
 ========================================================
 
@@ -472,9 +472,9 @@ $$
 $$
 
 ```r
-> var.BW.gram<-sum((WT_data$BW.gram-mean.BW.gram)^2)/(nrow(WT_data)-1)
-> sd.BW.gram<-sqrt(var.BW.gram)
-> c(var.BW.gram, sd.BW.gram)
+var.BW.gram<-sum((WT_data$BW.gram-mean.BW.gram)^2)/(nrow(WT_data)-1)
+sd.BW.gram<-sqrt(var.BW.gram)
+c(var.BW.gram, sd.BW.gram)
 ```
 
 ```
@@ -485,7 +485,7 @@ Spread of data - var() and sd() function (2/3)
 ========================================================
 
 ```r
-> var(WT_data$BW.gram)
+var(WT_data$BW.gram)
 ```
 
 ```
@@ -493,7 +493,7 @@ Spread of data - var() and sd() function (2/3)
 ```
 
 ```r
-> sd(WT_data$BW.gram)
+sd(WT_data$BW.gram)
 ```
 
 ```
@@ -569,7 +569,7 @@ WT_data<-alldata[alldata$Genotype=="+/+",]
 boxplot(BW.gram~Age,data=WT_data)
 ```
 
-![plot of chunk unnamed-chunk-32](CBW2018_course-figure/unnamed-chunk-32-1.png)
+![plot of chunk unnamed-chunk-33](CBW2018_course-figure/unnamed-chunk-33-1.png)
 
 
 Independent t-test example - Calculating variance (3/8)
@@ -809,7 +809,7 @@ WT_dbdb_data<-droplevels(WT_dbdb_data)
 boxplot(BW.gram~Genotype,data=WT_dbdb_data)
 ```
 
-![plot of chunk unnamed-chunk-46](CBW2018_course-figure/unnamed-chunk-46-1.png)
+![plot of chunk unnamed-chunk-47](CBW2018_course-figure/unnamed-chunk-47-1.png)
 
 
 Wilcoxon test
@@ -826,7 +826,7 @@ qqnorm(WT4wilcox$BW.gram)
 qqline(WT4wilcox$BW.gram)
 ```
 
-![plot of chunk unnamed-chunk-47](CBW2018_course-figure/unnamed-chunk-47-1.png)
+![plot of chunk unnamed-chunk-48](CBW2018_course-figure/unnamed-chunk-48-1.png)
 
 ```r
 shapiro.test(WT4wilcox$BW.gram)
@@ -853,7 +853,7 @@ qqnorm(KO4wilcox$BW.gram)
 qqline(KO4wilcox$BW.gram)
 ```
 
-![plot of chunk unnamed-chunk-48](CBW2018_course-figure/unnamed-chunk-48-1.png)
+![plot of chunk unnamed-chunk-49](CBW2018_course-figure/unnamed-chunk-49-1.png)
 
 ```r
 shapiro.test(KO4wilcox$BW.gram)
@@ -902,8 +902,8 @@ create a contigency table
 
 
 ```r
-> cmatrix<-matrix(c(5,40,295,19960),byrow=T,ncol=2,dimnames=list(c("In.B","Not.In.B"),c("In.A","Not.In.A")))
-> cmatrix
+cmatrix<-matrix(c(5,40,295,19960),byrow=T,ncol=2,dimnames=list(c("In.B","Not.In.B"),c("In.A","Not.In.A")))
+cmatrix
 ```
 
 ```
@@ -964,7 +964,7 @@ ANOVA (2/5)
 boxplot(BW.gram~Genotype,data=alldata)
 ```
 
-![plot of chunk unnamed-chunk-52](CBW2018_course-figure/unnamed-chunk-52-1.png)
+![plot of chunk unnamed-chunk-53](CBW2018_course-figure/unnamed-chunk-53-1.png)
 
 
 ANOVA - use the lm() function (3/5)
@@ -1045,10 +1045,10 @@ Correlation between vectors (2/6)
 
 
 ```r
-> x <- rnorm(100,10,2)
-> z <- rnorm(100,10,2)
-> y <- x
-> cor(x,y) #
+x <- rnorm(100,10,2)
+z <- rnorm(100,10,2)
+y <- x
+cor(x,y) #
 ```
 
 ```
@@ -1056,7 +1056,7 @@ Correlation between vectors (2/6)
 ```
 
 ```r
-> cor(x,-y)
+cor(x,-y)
 ```
 
 ```
@@ -1064,14 +1064,14 @@ Correlation between vectors (2/6)
 ```
 
 ```r
-> cor(x,z)
+cor(x,z)
 ```
 
 ```
-[1] 0.08619784
+[1] 0.04135381
 ```
 ***
-![plot of chunk unnamed-chunk-57](CBW2018_course-figure/unnamed-chunk-57-1.png)
+![plot of chunk unnamed-chunk-58](CBW2018_course-figure/unnamed-chunk-58-1.png)
 
 Correlation example (3/6)
 =========================================================
@@ -1080,8 +1080,8 @@ Example of our mouse data. We would like to see whether there is a relationship 
 
 
 ```r
-> KO_data<-alldata[alldata$Genotype=="db/db",]
-> head(KO_data)
+KO_data<-alldata[alldata$Genotype=="db/db",]
+head(KO_data)
 ```
 
 ```
@@ -1095,14 +1095,14 @@ Example of our mouse data. We would like to see whether there is a relationship 
 ```
 
 ```r
-> cor(KO_data$BW.gram,KO_data$FatTissue.percent)
+cor(KO_data$BW.gram,KO_data$FatTissue.percent)
 ```
 
 ```
 [1] 0.8436125
 ```
 ***
-![plot of chunk unnamed-chunk-59](CBW2018_course-figure/unnamed-chunk-59-1.png)
+![plot of chunk unnamed-chunk-60](CBW2018_course-figure/unnamed-chunk-60-1.png)
 
 Correlation over a matrix (4/6)
 =========================================================
@@ -1112,14 +1112,14 @@ Often we wish to apply correlation analysis to all columns or rows in a matrix i
 - subset mouse dataset
 
 ```r
-> mouse4cor<-KO_data[,c(6:8)]; 
+mouse4cor<-KO_data[,c(6:8)]; 
 ```
 
 Correlation over a matrix (5/6)
 =========================================================
 
 ```r
-> cor(mouse4cor)
+cor(mouse4cor)
 ```
 
 ```
@@ -1128,16 +1128,16 @@ BW.gram           1.0000000         0.8436125 0.6511112
 FatTissue.percent 0.8436125         1.0000000 0.5751244
 GLU.mg.dL         0.6511112         0.5751244 1.0000000
 ```
-![plot of chunk unnamed-chunk-62](CBW2018_course-figure/unnamed-chunk-62-1.png)
+![plot of chunk unnamed-chunk-63](CBW2018_course-figure/unnamed-chunk-63-1.png)
 
 Correlation (6/6)
 ========================================================
 
 ```r
-> pairs(mouse4cor)
+pairs(mouse4cor)
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-63-1.png" title="plot of chunk unnamed-chunk-63" alt="plot of chunk unnamed-chunk-63" width="650px" />
+<img src="CBW2018_course-figure/unnamed-chunk-64-1.png" title="plot of chunk unnamed-chunk-64" alt="plot of chunk unnamed-chunk-64" width="650px" />
 Linear regression (1/23)
 =========================================================
 
@@ -1149,7 +1149,7 @@ R also provides a comprehensive set of tools for regression analysis including t
 
 *minimize the vertical distance between the fitted line and data points* 
 
-<img src="CBW2018_course-figure/unnamed-chunk-64-1.png" title="plot of chunk unnamed-chunk-64" alt="plot of chunk unnamed-chunk-64" width="650px" />
+<img src="CBW2018_course-figure/unnamed-chunk-65-1.png" title="plot of chunk unnamed-chunk-65" alt="plot of chunk unnamed-chunk-65" width="650px" />
 
 
 Linear regression (2/23)
@@ -1158,8 +1158,8 @@ left: 70%
 We use KO mouse dataset as example and see whether we can use mouse body weight to predict the percentage of fat tissue.
 
 ```r
-> KO_data<-alldata[alldata$Genotype=="db/db",]
-> head(KO_data)
+KO_data<-alldata[alldata$Genotype=="db/db",]
+head(KO_data)
 ```
 
 ```
@@ -1172,7 +1172,7 @@ We use KO mouse dataset as example and see whether we can use mouse body weight 
 21  F_db/db_16_5   F    db/db  16  5   49.24              63.2       706
 ```
 ***
-<img src="CBW2018_course-figure/unnamed-chunk-66-1.png" title="plot of chunk unnamed-chunk-66" alt="plot of chunk unnamed-chunk-66" width="820px" />
+<img src="CBW2018_course-figure/unnamed-chunk-67-1.png" title="plot of chunk unnamed-chunk-67" alt="plot of chunk unnamed-chunk-67" width="820px" />
 
 
 Linear regression (3/23)
@@ -1182,8 +1182,8 @@ The **lm()** function fits a linear regression to your data and provides useful 
 In the example below we fit a linear model using  **lm()** on the *KO_data* dataset with *FatTissue.percent* (Y) as the dependent variable and *BW.gram* (X) as the explanatory variable.
 
 ```r
-> lmResult<-lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
-> lmResult
+lmResult<-lm(formula = FatTissue.percent ~ BW.gram, data = KO_data)
+lmResult
 ```
 
 ```
@@ -1204,7 +1204,7 @@ As we have seen, printing the model result provides the intercept and slope of l
 To get some more information on the model we can use the **summary()** function
 
 ```r
-> summary(lmResult)
+summary(lmResult)
 ```
 
 ```
@@ -1233,7 +1233,7 @@ Interpret output of lm() - coefficients (5/23)
 left: 70%
 
 ```r
-> lmResult$coefficients
+lmResult$coefficients
 ```
 
 ```
@@ -1261,7 +1261,7 @@ $$b_1\text{: the amount of f(x) will change when x changes 1 unit}$$
 # For every gram increased in the mice body weight, we expect 0.50 (%) increased in the Fat tissue
 ```
 ***
-<img src="CBW2018_course-figure/unnamed-chunk-72-1.png" title="plot of chunk unnamed-chunk-72" alt="plot of chunk unnamed-chunk-72" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-73-1.png" title="plot of chunk unnamed-chunk-73" alt="plot of chunk unnamed-chunk-73" width="720px" />
 
 
 More about coefficients (6/23)
@@ -1275,12 +1275,12 @@ If we have 3 KO mice with weight = 40, 55 and 66 grams, how do we predict their 
 Use the information from the *$coefficients*
 
 ```r
-> new_mouse_bw<-c(40,55,66)
-> beta0<-lmResult$coefficients[1]
-> beta1<-lmResult$coefficients[2]
-> 
-> predicted_new_fat<-beta0+beta1*new_mouse_bw
-> predicted_new_fat
+new_mouse_bw<-c(40,55,66)
+beta0<-lmResult$coefficients[1]
+beta1<-lmResult$coefficients[2]
+
+predicted_new_fat<-beta0+beta1*new_mouse_bw
+predicted_new_fat
 ```
 
 ```
@@ -1310,7 +1310,7 @@ To retrieve the residuals we can access the slot or use the **resid()** function
 
 
 ```r
-> summary(resid(lmResult))
+summary(resid(lmResult))
 ```
 
 ```
@@ -1319,7 +1319,7 @@ To retrieve the residuals we can access the slot or use the **resid()** function
 ```
 
 ```r
-> summary(lmResult$residual)
+summary(lmResult$residual)
 ```
 
 ```
@@ -1344,14 +1344,14 @@ plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(50,75),
 abline(lmResult,col="blueviolet",lwd=3, lty=1)
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-76-1.png" title="plot of chunk unnamed-chunk-76" alt="plot of chunk unnamed-chunk-76" width="1000" />
+<img src="CBW2018_course-figure/unnamed-chunk-77-1.png" title="plot of chunk unnamed-chunk-77" alt="plot of chunk unnamed-chunk-77" width="1000" />
 
 More about residuals (9/23)
 =========================================================
 
 Residual is the vertical distance between the observed data and the regression line. It has the same unit as the dependent variable.
 
-<img src="CBW2018_course-figure/unnamed-chunk-77-1.png" title="plot of chunk unnamed-chunk-77" alt="plot of chunk unnamed-chunk-77" width="1020" />
+<img src="CBW2018_course-figure/unnamed-chunk-78-1.png" title="plot of chunk unnamed-chunk-78" alt="plot of chunk unnamed-chunk-78" width="1020" />
 
 More about residuals (10/23)
 =========================================================
@@ -1360,7 +1360,7 @@ SSE shows the residual variability
 
 It shows the variability that cannot be explained by the regression model
 
-<img src="CBW2018_course-figure/unnamed-chunk-78-1.png" title="plot of chunk unnamed-chunk-78" alt="plot of chunk unnamed-chunk-78" width="1020" />
+<img src="CBW2018_course-figure/unnamed-chunk-79-1.png" title="plot of chunk unnamed-chunk-79" alt="plot of chunk unnamed-chunk-79" width="1020" />
 ***
 $$
 Error_i = y_i - \hat{y_i}
@@ -1390,21 +1390,21 @@ plot(KO_data$BW.gram,lmResult$residual,ylim=c(-10,10),
 abline(h=0,col="blueviolet",lwd=3, lty=1)
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-79-1.png" title="plot of chunk unnamed-chunk-79" alt="plot of chunk unnamed-chunk-79" width="1000px" />
+<img src="CBW2018_course-figure/unnamed-chunk-80-1.png" title="plot of chunk unnamed-chunk-80" alt="plot of chunk unnamed-chunk-80" width="1000px" />
 
 More about residuals (12/23)
 =========================================================
 
 Plot the residuals against the independent variable (X), i.e. the body weight. 
 
-<img src="CBW2018_course-figure/unnamed-chunk-80-1.png" title="plot of chunk unnamed-chunk-80" alt="plot of chunk unnamed-chunk-80" width="1020" />
+<img src="CBW2018_course-figure/unnamed-chunk-81-1.png" title="plot of chunk unnamed-chunk-81" alt="plot of chunk unnamed-chunk-81" width="1020" />
 
 More about residuals (13/23)
 =========================================================
 
 Plot the residuals against the independent variable (X)
 
-<img src="CBW2018_course-figure/unnamed-chunk-81-1.png" title="plot of chunk unnamed-chunk-81" alt="plot of chunk unnamed-chunk-81" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-82-1.png" title="plot of chunk unnamed-chunk-82" alt="plot of chunk unnamed-chunk-82" width="720px" />
 
 ***
 $$
@@ -1428,7 +1428,7 @@ Interpret output of lm() - R-squared (14/23)
 
 
 ```r
-> summary(lmResult)$r.squared
+summary(lmResult)$r.squared
 ```
 
 ```
@@ -1443,7 +1443,7 @@ More about R-squared (15/23)
 
 
 ```r
-> KO_data$FatTissue.percent
+KO_data$FatTissue.percent
 ```
 
 ```
@@ -1461,7 +1461,7 @@ More about R-squared (16/23)
 
 
 ```r
-> mean(KO_data$FatTissue.percent)
+mean(KO_data$FatTissue.percent)
 ```
 
 ```
@@ -1477,12 +1477,12 @@ More about R-squared (17/23)
 
 - mean might be a good choice
 
-<img src="CBW2018_course-figure/unnamed-chunk-85-1.png" title="plot of chunk unnamed-chunk-85" alt="plot of chunk unnamed-chunk-85" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-86-1.png" title="plot of chunk unnamed-chunk-86" alt="plot of chunk unnamed-chunk-86" width="720px" />
 
 More about R-squared - TSS (18/23)
 =========================================================
 
-<img src="CBW2018_course-figure/unnamed-chunk-86-1.png" title="plot of chunk unnamed-chunk-86" alt="plot of chunk unnamed-chunk-86" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-87-1.png" title="plot of chunk unnamed-chunk-87" alt="plot of chunk unnamed-chunk-87" width="720px" />
 ***
 Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
 
@@ -1496,7 +1496,7 @@ More about  about R-squared (19/23)
 
 Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
 
-![plot of chunk unnamed-chunk-87](CBW2018_course-figure/unnamed-chunk-87-1.png)
+![plot of chunk unnamed-chunk-88](CBW2018_course-figure/unnamed-chunk-88-1.png)
 
 - Total Sum of Squares (TSS)
 
@@ -1510,7 +1510,7 @@ $$
 
 Residuals from the model
 
-![plot of chunk unnamed-chunk-88](CBW2018_course-figure/unnamed-chunk-88-1.png)
+![plot of chunk unnamed-chunk-89](CBW2018_course-figure/unnamed-chunk-89-1.png)
 - Sum of the square of the residuals (SSE)
 $$
 SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
@@ -1519,7 +1519,7 @@ $$
 More about R-squared (20/23)
 =========================================================
 
-<img src="CBW2018_course-figure/unnamed-chunk-89-1.png" title="plot of chunk unnamed-chunk-89" alt="plot of chunk unnamed-chunk-89" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-90-1.png" title="plot of chunk unnamed-chunk-90" alt="plot of chunk unnamed-chunk-90" width="720px" />
 
 More about R-squared - Calculating R-squared (21/23)
 =========================================================
@@ -1534,10 +1534,10 @@ $$
 
 
 ```r
-> SSE<-sum(resid(lm(FatTissue.percent~BW.gram,data=KO_data))^2)
-> TSS<-sum(resid(lm(FatTissue.percent~1,data=KO_data))^2)
-> R_square<-1-(SSE/TSS)
-> R_square
+SSE<-sum(resid(lm(FatTissue.percent~BW.gram,data=KO_data))^2)
+TSS<-sum(resid(lm(FatTissue.percent~1,data=KO_data))^2)
+R_square<-1-(SSE/TSS)
+R_square
 ```
 
 ```
@@ -1545,7 +1545,7 @@ $$
 ```
 
 ```r
-> summary(lmResult)$r.squared
+summary(lmResult)$r.squared
 ```
 
 ```
@@ -1562,7 +1562,7 @@ The F-test results from linear models also provides a measure of significance fo
 
 
 ```r
-> summary(lmResult)$fstatistic
+summary(lmResult)$fstatistic
 ```
 
 ```
@@ -1579,13 +1579,13 @@ $$
 
 
 ```r
-> n=nrow(KO_data)
-> SSM <- sum((predict(lmResult) - mean(KO_data$FatTissue.percent))^2)
-> MSE <-sum(lmResult$residuals^2)/(n-2)
-> 
-> MSM <-SSM/1
-> 
-> MSM/MSE
+n=nrow(KO_data)
+SSM <- sum((predict(lmResult) - mean(KO_data$FatTissue.percent))^2)
+MSE <-sum(lmResult$residuals^2)/(n-2)
+
+MSM <-SSM/1
+
+MSM/MSE
 ```
 
 ```
@@ -1593,7 +1593,7 @@ $$
 ```
 
 ```r
-> summary(lmResult)$fstatistic
+summary(lmResult)$fstatistic
 ```
 
 ```
