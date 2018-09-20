@@ -25,10 +25,10 @@ Materials.
 id: materials
 
 All prerequisites, links to material and slides for this course can be found on github.
-* [StatisticsInR](https://yfwang27.github.io/StatisticsR_CBW18/)
+* [LMS_StatisticsInR](https://lmsbioinformatics.github.io/LMS_StatisticsInR/)
 
 Or can be downloaded as a zip archive from here.
-* [Download zip](https://yfwang27.github.io/StatisticsR_CBW18/zipball/master)
+* [Download zip](https://github.com/LMSBioinformatics/LMS_StatisticsInR/archive/master.zip)
 
 Materials. - Presentations, source code and practicals.
 ========================================================
@@ -45,7 +45,7 @@ Set the Working directory
 
 Before running any of the code in the practicals or slides we need to set the working directory to the folder we unarchived.
 
-You may navigate to the unarchived Reproducible-R folder in the Rstudio menu
+You may navigate to the unarchived LMS_StatisticsInR folder in the Rstudio menu
 
 **Session -> Set Working Directory -> Choose Directory**
 
@@ -53,7 +53,7 @@ or in the console.
 
 ```{r,eval=F}
 setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18")
-# e.g. setwd("~/Downloads/StatisticsR_CBW18")
+# e.g. setwd("~/Downloads/LMS_StatisticsInR")
 ```
 
 Case study
