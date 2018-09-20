@@ -3,6 +3,8 @@ title: "Answer for Session2: Hypothesis Testing and ANOVA"
 author: "MRC London Institute of Medical Sciences (http://bioinformatics.lms.mrc.ac.uk)"
 date: "25/Sep/2018"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 These exercises cover the sections of Statistics in R [Session2: Hypothesis Testing and ANOVA]("../Session2_hypothesis_testing.html").
@@ -62,4 +64,8 @@ t.test(glycolysisExpression,tgfbExpression,var.equal = FALSE)
   LifeExp.anova<-anova(LifeExp.lm)
   LifeExp.anova
 ```
+- If the mean of life expectancy differs across different areas in the UK, perform the post-hoc analysis using TukeyHSD().
+```{r,message=T}
+  TukeyHSD(aov(LifeExp.lm))
 
+```

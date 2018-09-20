@@ -53,15 +53,15 @@ or in the console.
 
 
 ```r
-setwd("/Users/yfwang27/workfromhome/workshop/StatisticsR_CBW18")
-# e.g. setwd("~/Downloads/StatisticsInR/Statistics2016")
+setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18")
+# e.g. setwd("~/Downloads/StatisticsR_CBW18")
 ```
 
 Case study
 ========================================================
 Start from some data for mouse strain BKS.Cg-Dock7m +/+ Leprdb/J (db/db)
 
-Data Source: Jackson Laboratory
+Data Source: Jackson Laboratory (https://phenome.jax.org/projects/Jaxpheno17)
 
 <img src="figure/good_format.png";>
 
@@ -510,13 +510,13 @@ More about SD and Variance (3/3)
 Time for an exercise!
 ========================================================
 
-Exercise on this part can be found [here](./exercises/Session1_exercise1.html)
+Exercise on this part can be found [here](./exercises/Session1_exercise1_part1.html)
 
 
 Answers to exercise.
 ========================================================
 
-Answers can be found [here](./answers/Session1_answers1.html)
+Answers can be found [here](./answers/Session1_answers1_part1.html)
 
 
 
@@ -1004,6 +1004,7 @@ boxplot(BW.gram~Genotype,data=WT_dbdb_data)
 
 Wilcoxon test
 ========================================================
+left: 70%
 **qqnorm()** and **qqline()**
 
 Check normal distribution with normal quantile plots for WT data
@@ -1017,6 +1018,9 @@ qqline(WT4wilcox$BW.gram)
 ```
 
 ![plot of chunk unnamed-chunk-61](CBW2018_course-figure/unnamed-chunk-61-1.png)
+
+***
+
 
 ```r
 shapiro.test(WT4wilcox$BW.gram)
@@ -1032,6 +1036,7 @@ W = 0.95302, p-value = 0.4441
 
 Wilcoxon test
 ========================================================
+left: 70%
 **qqnorm()** and **qqline()**
 
 Check normal distribution with normal quantile plots for db/db data
@@ -1039,11 +1044,15 @@ Check normal distribution with normal quantile plots for db/db data
 
 ```r
 KO4wilcox<-WT_dbdb_data[WT_dbdb_data$Genotype=="db/db",]
+
 qqnorm(KO4wilcox$BW.gram)
 qqline(KO4wilcox$BW.gram)
 ```
 
-![plot of chunk unnamed-chunk-62](CBW2018_course-figure/unnamed-chunk-62-1.png)
+![plot of chunk unnamed-chunk-63](CBW2018_course-figure/unnamed-chunk-63-1.png)
+
+***
+
 
 ```r
 shapiro.test(KO4wilcox$BW.gram)
@@ -1125,18 +1134,6 @@ odds ratio
   8.454877 
 ```
 
-Time for an exercise!
-========================================================
-
-Exercise on this session can be found [here](exercises/Session2_exercise2.html)
-
-
-
-Answers to exercise.
-========================================================
-
-Answers can be found [here](answers/Session2_answers2.html)
-
 
   
 ANOVA (1/5)
@@ -1167,7 +1164,7 @@ ANOVA (2/5)
 boxplot(BW.gram~Genotype,data=alldata)
 ```
 
-![plot of chunk unnamed-chunk-66](CBW2018_course-figure/unnamed-chunk-66-1.png)
+![plot of chunk unnamed-chunk-68](CBW2018_course-figure/unnamed-chunk-68-1.png)
 
 
 ANOVA - use the lm() function (3/5)
@@ -1229,6 +1226,19 @@ db/db-+/+  23.796276 19.4190332 28.17352 0.0000000
 db/db-db/+ 18.665083 13.9085869 23.42158 0.0000000
 ```
 
+
+Time for an exercise!
+========================================================
+
+Exercise on this session can be found [here](exercises/Session2_exercise2.html)
+
+
+Answers to exercise.
+========================================================
+
+Answers can be found [here](answers/Session2_answers2.html)
+
+
 Correlation (1/6)
 =========================================================
 
@@ -1274,7 +1284,7 @@ cor(x,z)
 [1] -0.01102598
 ```
 ***
-![plot of chunk unnamed-chunk-71](CBW2018_course-figure/unnamed-chunk-71-1.png)
+![plot of chunk unnamed-chunk-73](CBW2018_course-figure/unnamed-chunk-73-1.png)
 
 Correlation example (3/6)
 =========================================================
@@ -1305,7 +1315,7 @@ cor(KO_data$BW.gram,KO_data$FatTissue.percent)
 [1] 0.8436125
 ```
 ***
-![plot of chunk unnamed-chunk-73](CBW2018_course-figure/unnamed-chunk-73-1.png)
+![plot of chunk unnamed-chunk-75](CBW2018_course-figure/unnamed-chunk-75-1.png)
 
 Correlation over a matrix (4/6)
 =========================================================
@@ -1331,7 +1341,7 @@ BW.gram           1.0000000         0.8436125 0.6511112
 FatTissue.percent 0.8436125         1.0000000 0.5751244
 GLU.mg.dL         0.6511112         0.5751244 1.0000000
 ```
-![plot of chunk unnamed-chunk-76](CBW2018_course-figure/unnamed-chunk-76-1.png)
+![plot of chunk unnamed-chunk-78](CBW2018_course-figure/unnamed-chunk-78-1.png)
 
 Correlation (6/6)
 ========================================================
@@ -1340,7 +1350,7 @@ Correlation (6/6)
 pairs(mouse4cor)
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-77-1.png" title="plot of chunk unnamed-chunk-77" alt="plot of chunk unnamed-chunk-77" width="650px" />
+<img src="CBW2018_course-figure/unnamed-chunk-79-1.png" title="plot of chunk unnamed-chunk-79" alt="plot of chunk unnamed-chunk-79" width="650px" />
 Linear regression (1/23)
 =========================================================
 
@@ -1352,7 +1362,7 @@ R also provides a comprehensive set of tools for regression analysis including t
 
 *minimize the vertical distance between the fitted line and data points* 
 
-<img src="CBW2018_course-figure/unnamed-chunk-78-1.png" title="plot of chunk unnamed-chunk-78" alt="plot of chunk unnamed-chunk-78" width="650px" />
+<img src="CBW2018_course-figure/unnamed-chunk-80-1.png" title="plot of chunk unnamed-chunk-80" alt="plot of chunk unnamed-chunk-80" width="650px" />
 
 
 Linear regression (2/23)
@@ -1375,7 +1385,7 @@ head(KO_data)
 21  F_db/db_16_5   F    db/db  16  5   49.24              63.2       706
 ```
 ***
-<img src="CBW2018_course-figure/unnamed-chunk-80-1.png" title="plot of chunk unnamed-chunk-80" alt="plot of chunk unnamed-chunk-80" width="820px" />
+<img src="CBW2018_course-figure/unnamed-chunk-82-1.png" title="plot of chunk unnamed-chunk-82" alt="plot of chunk unnamed-chunk-82" width="820px" />
 
 
 Linear regression (3/23)
@@ -1464,7 +1474,7 @@ $$b_1\text{: the amount of f(x) will change when x changes 1 unit}$$
 # For every gram increased in the mice body weight, we expect 0.50 (%) increased in the Fat tissue
 ```
 ***
-<img src="CBW2018_course-figure/unnamed-chunk-86-1.png" title="plot of chunk unnamed-chunk-86" alt="plot of chunk unnamed-chunk-86" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-88-1.png" title="plot of chunk unnamed-chunk-88" alt="plot of chunk unnamed-chunk-88" width="720px" />
 
 
 More about coefficients (6/23)
@@ -1547,14 +1557,14 @@ plot(KO_data$BW.gram,KO_data$FatTissue.percent,ylim=c(50,75),
 abline(lmResult,col="blueviolet",lwd=3, lty=1)
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-90-1.png" title="plot of chunk unnamed-chunk-90" alt="plot of chunk unnamed-chunk-90" width="1000" />
+<img src="CBW2018_course-figure/unnamed-chunk-92-1.png" title="plot of chunk unnamed-chunk-92" alt="plot of chunk unnamed-chunk-92" width="1000" />
 
 More about residuals (9/23)
 =========================================================
 
 Residual is the vertical distance between the observed data and the regression line. It has the same unit as the dependent variable.
 
-<img src="CBW2018_course-figure/unnamed-chunk-91-1.png" title="plot of chunk unnamed-chunk-91" alt="plot of chunk unnamed-chunk-91" width="1020" />
+<img src="CBW2018_course-figure/unnamed-chunk-93-1.png" title="plot of chunk unnamed-chunk-93" alt="plot of chunk unnamed-chunk-93" width="1020" />
 
 More about residuals (10/23)
 =========================================================
@@ -1563,7 +1573,7 @@ SSE shows the residual variability
 
 It shows the variability that cannot be explained by the regression model
 
-<img src="CBW2018_course-figure/unnamed-chunk-92-1.png" title="plot of chunk unnamed-chunk-92" alt="plot of chunk unnamed-chunk-92" width="1020" />
+<img src="CBW2018_course-figure/unnamed-chunk-94-1.png" title="plot of chunk unnamed-chunk-94" alt="plot of chunk unnamed-chunk-94" width="1020" />
 ***
 $$
 Error_i = y_i - \hat{y_i}
@@ -1593,21 +1603,21 @@ plot(KO_data$BW.gram,lmResult$residual,ylim=c(-10,10),
 abline(h=0,col="blueviolet",lwd=3, lty=1)
 ```
 
-<img src="CBW2018_course-figure/unnamed-chunk-93-1.png" title="plot of chunk unnamed-chunk-93" alt="plot of chunk unnamed-chunk-93" width="1000px" />
+<img src="CBW2018_course-figure/unnamed-chunk-95-1.png" title="plot of chunk unnamed-chunk-95" alt="plot of chunk unnamed-chunk-95" width="1000px" />
 
 More about residuals (12/23)
 =========================================================
 
 Plot the residuals against the independent variable (X), i.e. the body weight. 
 
-<img src="CBW2018_course-figure/unnamed-chunk-94-1.png" title="plot of chunk unnamed-chunk-94" alt="plot of chunk unnamed-chunk-94" width="1020" />
+<img src="CBW2018_course-figure/unnamed-chunk-96-1.png" title="plot of chunk unnamed-chunk-96" alt="plot of chunk unnamed-chunk-96" width="1020" />
 
 More about residuals (13/23)
 =========================================================
 
 Plot the residuals against the independent variable (X)
 
-<img src="CBW2018_course-figure/unnamed-chunk-95-1.png" title="plot of chunk unnamed-chunk-95" alt="plot of chunk unnamed-chunk-95" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-97-1.png" title="plot of chunk unnamed-chunk-97" alt="plot of chunk unnamed-chunk-97" width="720px" />
 
 ***
 $$
@@ -1680,12 +1690,12 @@ More about R-squared (17/23)
 
 - mean might be a good choice
 
-<img src="CBW2018_course-figure/unnamed-chunk-99-1.png" title="plot of chunk unnamed-chunk-99" alt="plot of chunk unnamed-chunk-99" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-101-1.png" title="plot of chunk unnamed-chunk-101" alt="plot of chunk unnamed-chunk-101" width="720px" />
 
 More about R-squared - TSS (18/23)
 =========================================================
 
-<img src="CBW2018_course-figure/unnamed-chunk-100-1.png" title="plot of chunk unnamed-chunk-100" alt="plot of chunk unnamed-chunk-100" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-102-1.png" title="plot of chunk unnamed-chunk-102" alt="plot of chunk unnamed-chunk-102" width="720px" />
 ***
 Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
 
@@ -1699,7 +1709,7 @@ More about  about R-squared (19/23)
 
 Residuals from the mean: assuming the independent variable (X), i.e. height in our case, does not exist
 
-![plot of chunk unnamed-chunk-101](CBW2018_course-figure/unnamed-chunk-101-1.png)
+![plot of chunk unnamed-chunk-103](CBW2018_course-figure/unnamed-chunk-103-1.png)
 
 - Total Sum of Squares (TSS)
 
@@ -1713,7 +1723,7 @@ $$
 
 Residuals from the model
 
-![plot of chunk unnamed-chunk-102](CBW2018_course-figure/unnamed-chunk-102-1.png)
+![plot of chunk unnamed-chunk-104](CBW2018_course-figure/unnamed-chunk-104-1.png)
 - Sum of the square of the residuals (SSE)
 $$
 SSE  = \sum_{i=1}^{n}(y_i-\hat{y_i})^2
@@ -1722,7 +1732,7 @@ $$
 More about R-squared (20/23)
 =========================================================
 
-<img src="CBW2018_course-figure/unnamed-chunk-103-1.png" title="plot of chunk unnamed-chunk-103" alt="plot of chunk unnamed-chunk-103" width="720px" />
+<img src="CBW2018_course-figure/unnamed-chunk-105-1.png" title="plot of chunk unnamed-chunk-105" alt="plot of chunk unnamed-chunk-105" width="720px" />
 
 More about R-squared - Calculating R-squared (21/23)
 =========================================================

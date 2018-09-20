@@ -52,15 +52,15 @@ You may navigate to the unarchived Reproducible-R folder in the Rstudio menu
 or in the console.
 
 ```{r,eval=F}
-setwd("/Users/yfwang27/workfromhome/workshop/StatisticsR_CBW18")
-# e.g. setwd("~/Downloads/StatisticsInR/Statistics2016")
+setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18")
+# e.g. setwd("~/Downloads/StatisticsR_CBW18")
 ```
 
 Case study
 ========================================================
 Start from some data for mouse strain BKS.Cg-Dock7m +/+ Leprdb/J (db/db)
 
-Data Source: Jackson Laboratory
+Data Source: Jackson Laboratory (https://phenome.jax.org/projects/Jaxpheno17)
 
 <img src="figure/good_format.png";>
 
@@ -387,13 +387,13 @@ More about SD and Variance (3/3)
 Time for an exercise!
 ========================================================
 
-Exercise on this part can be found [here](./exercises/Session1_exercise1.html)
+Exercise on this part can be found [here](./exercises/Session1_exercise1_part1.html)
 
 
 Answers to exercise.
 ========================================================
 
-Answers can be found [here](./answers/Session1_answers1.html)
+Answers can be found [here](./answers/Session1_answers1_part1.html)
 
 
 
@@ -825,6 +825,7 @@ boxplot(BW.gram~Genotype,data=WT_dbdb_data)
 
 Wilcoxon test
 ========================================================
+left: 70%
 **qqnorm()** and **qqline()**
 
 Check normal distribution with normal quantile plots for WT data
@@ -834,20 +835,34 @@ WT4wilcox<-WT_dbdb_data[WT_dbdb_data$Genotype=="+/+",]
 
 qqnorm(WT4wilcox$BW.gram)
 qqline(WT4wilcox$BW.gram)
+
+```
+
+***
+
+```{r}
 shapiro.test(WT4wilcox$BW.gram)
 
 ```
 
 Wilcoxon test
 ========================================================
+left: 70%
 **qqnorm()** and **qqline()**
 
 Check normal distribution with normal quantile plots for db/db data
 
 ```{r}
 KO4wilcox<-WT_dbdb_data[WT_dbdb_data$Genotype=="db/db",]
+
 qqnorm(KO4wilcox$BW.gram)
 qqline(KO4wilcox$BW.gram)
+
+```
+
+***
+
+```{r}
 shapiro.test(KO4wilcox$BW.gram)
 ```
 
@@ -889,18 +904,6 @@ fisher.test()
 ```{r}
 fisher.test(cmatrix)
 ```
-
-Time for an exercise!
-========================================================
-
-Exercise on this session can be found [here](exercises/Session2_exercise2.html)
-
-
-
-Answers to exercise.
-========================================================
-
-Answers can be found [here](answers/Session2_answers2.html)
 
 
   
@@ -954,6 +957,19 @@ ANOVA - post-hoc analysis (5/5)
 ```{r}
 TukeyHSD(aov(lmPG))
 ```
+
+
+Time for an exercise!
+========================================================
+
+Exercise on this session can be found [here](exercises/Session2_exercise2.html)
+
+
+Answers to exercise.
+========================================================
+
+Answers can be found [here](answers/Session2_answers2.html)
+
 
 Correlation (1/6)
 =========================================================

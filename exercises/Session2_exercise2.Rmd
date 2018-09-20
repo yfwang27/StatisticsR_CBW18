@@ -20,6 +20,8 @@ These exercises cover the sections of Statistics in R [Session2: Hypothesis Test
 
 - Read in the file that we used for the Session 1 exercise Life_expectancy_at_birth.csv.
 - Perform an ANOVA analysis and see whether the mean of life expectancy differs across different areas in the UK.
+- If the mean of life expectancy differs across different areas in the UK, perform the post-hoc analysis using TukeyHSD().
+
 
 ```{r,echo=F}
 Life_exp<-read.csv("../data/Life_expectancy_at_birth.csv",header=T)

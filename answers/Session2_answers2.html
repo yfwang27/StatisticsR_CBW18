@@ -257,6 +257,23 @@ var.test(glycolysisExpression,tgfbExpression)</code></pre>
 ## Residuals 156 1267.96   8.128                   
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+<ul>
+<li>If the mean of life expectancy differs across different areas in the UK, perform the post-hoc analysis using TukeyHSD().</li>
+</ul>
+<pre class="r"><code>  TukeyHSD(aov(LifeExp.lm))</code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = LifeExp.lm)
+## 
+## $area
+##                        diff         lwr        upr     p adj
+## N.Ireland-England  -0.78325 -2.43877912  0.8722791 0.6096393
+## Scotland-England   -2.25325 -3.90877912 -0.5977209 0.0029936
+## Wales-England      -0.68025 -2.33577912  0.9752791 0.7100526
+## Scotland-N.Ireland -1.47000 -3.12552912  0.1855291 0.1010694
+## Wales-N.Ireland     0.10300 -1.55252912  1.7585291 0.9984929
+## Wales-Scotland      1.57300 -0.08252912  3.2285291 0.0691138</code></pre>
 
 
 
