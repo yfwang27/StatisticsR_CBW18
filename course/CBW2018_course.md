@@ -53,7 +53,7 @@ or in the console.
 
 
 ```r
-setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18")
+setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18/course/")
 # e.g. setwd("~/Downloads/LMS_StatisticsInR")
 ```
 
