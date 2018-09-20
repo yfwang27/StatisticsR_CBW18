@@ -52,7 +52,7 @@ You may navigate to the unarchived LMS_StatisticsInR folder in the Rstudio menu
 or in the console.
 
 ```{r,eval=F}
-setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18")
+setwd("/Volumes/bioinfomatics$/yfwang/CBW/StatisticsR_CBW18/course/")
 # e.g. setwd("~/Downloads/LMS_StatisticsInR")
 ```
 
